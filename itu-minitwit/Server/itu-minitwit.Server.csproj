@@ -12,6 +12,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,4 +21,8 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Remove="Swashbuckle" />
+    <None Remove="Swashbuckle.AspNetCore" />
+  </ItemGroup>
 </Project>
