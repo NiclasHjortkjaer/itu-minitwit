@@ -13,6 +13,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
@@ -25,5 +30,18 @@
   <ItemGroup>
     <None Remove="Swashbuckle" />
     <None Remove="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20230207173721_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20230207174606_InitialCreate.cs" />
+    <Compile Remove="Migrations\20230207174606_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20230207174916_InitialCreate.Designer.cs" />
   </ItemGroup>
 </Project>
