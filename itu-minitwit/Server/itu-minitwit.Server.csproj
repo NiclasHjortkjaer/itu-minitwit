@@ -38,6 +38,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="wwwroot" />
   </ItemGroup>
 
 
