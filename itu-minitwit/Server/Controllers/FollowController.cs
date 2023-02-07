@@ -5,7 +5,7 @@ namespace itu_minitwit.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class FollowController : ControllerBase
+public class MessageController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
     {
@@ -14,7 +14,7 @@ public class FollowController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public FollowController(ILogger<WeatherForecastController> logger)
+    public MessageController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
     }
