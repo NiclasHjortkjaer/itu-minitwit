@@ -27,7 +27,7 @@ class MiniTwitTestCase(unittest.TestCase):
 
     def setUp(self):
         """Before each test, set up a blank database"""
-        self.app = LiveServerSession("http://127.0.0.1:80") #TODO: replace with url!
+        self.app = LiveServerSession("http://localhost:5108") #TODO: replace with url!
 
     def register(self, username, password, password2=None, email=None):
         """Helper function to register a user"""
