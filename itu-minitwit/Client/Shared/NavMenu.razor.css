@@ -1,4 +1,4 @@
-﻿.navbar-toggler {
+﻿/*.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -60,15 +60,41 @@
         display: none;
     }
 
-    .collapse {
+    .collapse {*/
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        /*display: block;
     }
     
-    .nav-scrollable {
+    .nav-scrollable {*/
         /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
+        /*height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
+}*/
+
+
+/* New css */
+.navigation {
+    background: #DEE9E8;
+    padding: 4px 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #eee;
+    color: #888;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
+.navigation a {
+    color: #444;
+    font-weight: bold;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.link-content {
+    color: black;
+    border: none;
+}

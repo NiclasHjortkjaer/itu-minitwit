@@ -1,7 +1,9 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #CAECE9;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 14px;
 }
 
 h1:focus {
@@ -100,3 +102,6 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+.twit-link {
+    text-decoration: none;
+}
