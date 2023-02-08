@@ -1,0 +1,25 @@
+﻿@namespace Components
+@using itu_minitwit.Shared
+
+@if(Message != null)
+{
+    <div class="tweet-container">
+        <div class="profile-container">
+            <div class="profile-picture">
+                <p>@Message.Author.Username.Substring(0, 2).ToUpper()</p>
+            </div>
+        </div>
+        <div class="tweet-content">
+            <p class="tweet-text">@Message.Text</p>
+            <div class="tweet-footer">
+                <a href="profile/@Message.Author.Username">@Message.Author.Username</a>
+                <p class="tweet-date">@Message.PublishDate</p>
+            </div>
+        </div>
+    </div>   
+}
+
+@code {
+    [Parameter]
+    public MessageDto Message { get; set; }
+}

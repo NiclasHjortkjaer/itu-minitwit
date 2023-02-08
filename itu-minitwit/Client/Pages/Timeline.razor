@@ -1,12 +1,12 @@
-﻿@page "/Public2"
+﻿@page "/"
 @using itu_minitwit.Shared
-@inject HttpClient Http
+@using Components
+@using itu_minitwit.Client.Services
+@inject IMessageService messageService
 
 <PageTitle>Public</PageTitle>
 
-<h1>Weather forecast</h1>
-
-<p>Public timeline</p>
+<h1>Public Timeline</h1>
 
 @if (_messages == null)
 {
@@ -16,9 +16,7 @@ else
 {
     foreach(var msg in _messages)
     {
-            <div>
-                <p>@msg.Author.Username: <span>@msg.Text</span></p>
-            </div>
+        <Tweet Message="@msg"/>
     }
 }
 
@@ -27,15 +25,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var messages = await Http.GetFromJsonAsync<IEnumerable<MessageDto>>("messages");
-        if(messages != null)
-        {
-            _messages = messages;
-        }
-        else
-        {
-            // Some kind of error handling, or will just display Loading... forever
-        }
+        _messages = await messageService.GetTimeline();
     }
 }
 
