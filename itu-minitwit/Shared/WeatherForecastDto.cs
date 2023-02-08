@@ -1,6 +1,6 @@
 ﻿namespace itu_minitwit.Shared;
 
-public class WeatherForecast
+public class WeatherForecastDto
 {
     public DateOnly Date { get; set; }
 

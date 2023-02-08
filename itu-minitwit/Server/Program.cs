@@ -1,4 +1,5 @@
-﻿using itu_minitwit.Server.Database;
+﻿using AutoMapper;
+using itu_minitwit.Server.Database;
 using itu_minitwit.Server.Repositories;
 using ituminitwit.Server.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +20,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "ToDo API",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
+        Title = "Mini Twitter API",
+        Description = "An ASP.NET Core Web API for managing Mini Twitter",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
@@ -34,6 +35,15 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+// Auto Mapper Configurations
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new ituminitwit.Server.Database.MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 

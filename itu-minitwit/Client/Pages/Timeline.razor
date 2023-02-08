@@ -1,0 +1,41 @@
+﻿@page "/Public2"
+@using itu_minitwit.Shared
+@inject HttpClient Http
+
+<PageTitle>Public</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>Public timeline</p>
+
+@if (_messages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach(var msg in _messages)
+    {
+            <div>
+                <p>@msg.Author.Username: <span>@msg.Text</span></p>
+            </div>
+    }
+}
+
+@code {
+    private IEnumerable<MessageDto> _messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var messages = await Http.GetFromJsonAsync<IEnumerable<MessageDto>>("messages");
+        if(messages != null)
+        {
+            _messages = messages;
+        }
+        else
+        {
+            // Some kind of error handling, or will just display Loading... forever
+        }
+    }
+}
+
