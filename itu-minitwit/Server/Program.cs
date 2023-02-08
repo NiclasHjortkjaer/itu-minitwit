@@ -87,8 +87,7 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
-
-app.MapFallbackToFile("index.html"); // FUCK JA!!! DET HER FIKSER DET
+app.MapFallbackToFile("index.html");
 
 app.Run();
 
