@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using itu_minitwit.Server.Database;
 
@@ -10,9 +11,11 @@ using itu_minitwit.Server.Database;
 namespace ituminitwit.Server.Migrations
 {
     [DbContext(typeof(MinitwitContext))]
-    partial class MinitwitContextModelSnapshot : ModelSnapshot
+    [Migration("20230209232751_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");

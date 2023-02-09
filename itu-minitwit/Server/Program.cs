@@ -2,6 +2,8 @@
 using itu_minitwit.Server.Database;
 using itu_minitwit.Server.Repositories;
 using ituminitwit.Server.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -11,6 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MinitwitContext>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
+// Add identity for authentication
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<MinitwitContext>();
+
+builder.Services.AddIdentityServer()
+    .AddApiAuthorization<User, MinitwitContext>();
+
+builder.Services.AddAuthentication()
+    .AddIdentityServerJwt();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -80,6 +92,10 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseIdentityServer();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
