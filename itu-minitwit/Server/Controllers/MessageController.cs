@@ -2,6 +2,7 @@
 using itu_minitwit.Shared;
 using ituminitwit.Server.Interfaces.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace itu_minitwit.Server.Controllers;
 

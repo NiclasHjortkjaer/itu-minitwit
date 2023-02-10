@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using itu_minitwit.Server.Database;
 using itu_minitwit.Server.Repositories;
 using ituminitwit.Server.Interfaces.Repositories;
@@ -93,16 +93,20 @@ else
     app.UseHsts();
 }
 
+// Order of these is very important!
 app.UseIdentityServer();
 app.UseAuthentication();
+app.UseRouting();
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
-app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();

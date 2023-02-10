@@ -22,3 +22,11 @@
     color: black;
     border: none;
 }
+
+.sign-out {
+    cursor: pointer;
+}
+
+.profile-information {
+    margin-left: auto;
+}

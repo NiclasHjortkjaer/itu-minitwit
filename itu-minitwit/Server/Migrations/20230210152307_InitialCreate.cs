@@ -222,7 +222,7 @@ namespace ituminitwit.Server.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    AuthorId1 = table.Column<string>(type: "TEXT", nullable: false),
+                    AuthorId1 = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
                     PublishDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Flagged = table.Column<int>(type: "INTEGER", nullable: true)
@@ -234,8 +234,7 @@ namespace ituminitwit.Server.Migrations
                         name: "FK_Messages_AspNetUsers_AuthorId1",
                         column: x => x.AuthorId1,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -267,9 +266,9 @@ namespace ituminitwit.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "80fde70b-6828-4e19-a6ef-3c6bf07513a4", null, "Registered", "REGISTERED" },
-                    { "a6ea67f1-0b8d-4462-92ca-5fc0b33cafd9", null, "Administrator", "ADMINISTRATOR" },
-                    { "ebf66e8c-2022-4c46-ba13-5075a6b715b5", null, "Visitor", "VISITOR" }
+                    { "02e661a6-4d36-4fc7-8f59-3158ecfa6f7a", null, "Administrator", "ADMINISTRATOR" },
+                    { "19aded04-57cf-4f76-9cda-5ad70cbe11d6", null, "Registered", "REGISTERED" },
+                    { "a5372157-7fa9-4c4d-acf7-bee6f3e80d80", null, "Visitor", "VISITOR" }
                 });
 
             migrationBuilder.CreateIndex(

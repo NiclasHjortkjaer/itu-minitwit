@@ -11,7 +11,7 @@ using itu_minitwit.Server.Database;
 namespace ituminitwit.Server.Migrations
 {
     [DbContext(typeof(MinitwitContext))]
-    [Migration("20230209232751_InitialCreate")]
+    [Migration("20230210152307_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -189,19 +189,19 @@ namespace ituminitwit.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ebf66e8c-2022-4c46-ba13-5075a6b715b5",
+                            Id = "a5372157-7fa9-4c4d-acf7-bee6f3e80d80",
                             Name = "Visitor",
                             NormalizedName = "VISITOR"
                         },
                         new
                         {
-                            Id = "80fde70b-6828-4e19-a6ef-3c6bf07513a4",
+                            Id = "19aded04-57cf-4f76-9cda-5ad70cbe11d6",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         },
                         new
                         {
-                            Id = "a6ea67f1-0b8d-4462-92ca-5fc0b33cafd9",
+                            Id = "02e661a6-4d36-4fc7-8f59-3158ecfa6f7a",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -338,7 +338,6 @@ namespace ituminitwit.Server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AuthorId1")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("Flagged")
@@ -492,9 +491,7 @@ namespace ituminitwit.Server.Migrations
                 {
                     b.HasOne("itu_minitwit.Server.Database.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId1");
 
                     b.Navigation("Author");
                 });
