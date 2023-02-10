@@ -3,13 +3,6 @@ networks:
   outside:
 
 services:
-  db:
-    container_name: app-db
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    ports:
-      - 8002:1433
-    networks:
-      - outside
   web:
     container_name: itu-minitwit
     image: ${DOCKER_REGISTRY-}itu-minitwit
@@ -17,6 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8001:80
+      - 8001:5108
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     networks:
       - outside

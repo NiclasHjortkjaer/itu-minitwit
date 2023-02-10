@@ -1,10 +1,10 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 5108
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ./ .
+COPY . ./
 RUN dotnet restore "./itu-minitwit/Server/itu-minitwit.Server.csproj"
 WORKDIR "/src"
 RUN dotnet build "./itu-minitwit/Server/itu-minitwit.Server.csproj" -c release -o /app/build
