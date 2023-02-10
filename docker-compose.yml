@@ -1,14 +1,22 @@
 ﻿version: "3.9"
+networks:
+  outside:
+
 services:
-  web:
-    build: ./
-    ports:
-      - 5000:5000
-      - 5001:5001
-    environment:
-      - ASPNETCORE_HTTP_PORT=https://+:5001
-      - ASPNETCORE_URLS=http://+:5000
   db:
-    
+    container_name: app-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
-      - 
+      - 8002:1433
+    networks:
+      - outside
+  web:
+    container_name: itu-minitwit
+    image: ${DOCKER_REGISTRY-}itu-minitwit
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8001:80
+    networks:
+      - outside
