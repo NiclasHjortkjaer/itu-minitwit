@@ -1,10 +1,14 @@
 ﻿version: "3.9"
 services:
   web:
-    build: ./itu-minitwit/Server
+    build: ./
     ports:
       - 5000:5000
       - 5001:5001
     environment:
       - ASPNETCORE_HTTP_PORT=https://+:5001
       - ASPNETCORE_URLS=http://+:5000
+  db:
+    
+    ports:
+      - 
