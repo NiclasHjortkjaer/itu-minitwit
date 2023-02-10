@@ -1,0 +1,16 @@
+﻿@page "/profile/{Username}"
+
+<p>Profile of @Username</p>
+
+@code{
+
+    [Parameter]
+    public string Username { get; set; }
+
+    // Here it would make sense to call the backend, and find the UserDto associated with this name
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+}

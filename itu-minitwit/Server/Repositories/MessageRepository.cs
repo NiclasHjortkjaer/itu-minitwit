@@ -12,7 +12,7 @@ public class MessageRepository : IMessageRepository
     {
         _minitwitContext = minitwitContext;
     }
-    
+
     public async Task<IEnumerable<Message>> Get()
     {
         return await _minitwitContext.Messages
@@ -22,22 +22,23 @@ public class MessageRepository : IMessageRepository
             .ToListAsync();
     }
 
-    public bool Get(int id)
+    public bool Create(Message message)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<bool> GetByUser(int userId)
+
+    public Task<Message> Get(int id)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<bool> GetByFollows(int userId)
+    public Task<IEnumerable<Message>> GetByFollows(int userId)
     {
         throw new NotImplementedException();
     }
 
-    public bool Create(bool message)
+    public Task<IEnumerable<Message>> GetByUser(int userId)
     {
         throw new NotImplementedException();
     }

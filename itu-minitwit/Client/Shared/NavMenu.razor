@@ -1,40 +1,53 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">itu-minitwit</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
+<div class="flex-row">
+    <div class="nav-item px-3">
+        <NavLink class="twit-link" href="" Match="NavLinkMatch.All">
+            <div class="link-content">
+                <span class="oi oi-home" aria-hidden="true"></span> public timeline
+            </div>
+        </NavLink>
+    </div>
+    
+    <AuthorizeView>
+        <NotAuthorized>
+            <div class="nav-item px-3">
+                <NavLink class="twit-link" href="authentication/register">
+                    <div class="link-content">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> sign up
+                    </div>
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="twit-link" href="authentication/login">
+                    <div class="link-content">
+                        <span class="oi oi-lock-locked" aria-hidden="true"></span> sign in
+                    </div>
+                </NavLink>
+            </div>
+        </NotAuthorized>
+        <Authorized>
+            <div class="nav-item px-3 sign-out">
+                <NavLink class="twit-link" @onclick="BeginSignOut">
+                    <div class="link-content">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> sign out
+                    </div>
+                </NavLink>
+            </div>
+            
+            <div class="profile-information">
+                <a href="profile/@(context.User.Identity?.Name!.Split("@")[0])">Hello, @context.User.Identity?.Name!</a
+            </div>
+        </Authorized>
+    </AuthorizeView>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    private async Task BeginSignOut(MouseEventArgs args)
     {
-        collapseNavMenu = !collapseNavMenu;
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
     }
 }
-

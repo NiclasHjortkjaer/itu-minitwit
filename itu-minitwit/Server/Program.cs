@@ -1,6 +1,9 @@
-﻿using itu_minitwit.Server.Database;
+using AutoMapper;
+using itu_minitwit.Server.Database;
 using itu_minitwit.Server.Repositories;
 using ituminitwit.Server.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -11,6 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MinitwitContext>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
+// Add identity for authentication
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<MinitwitContext>();
+
+builder.Services.AddIdentityServer()
+    .AddApiAuthorization<User, MinitwitContext>();
+
+builder.Services.AddAuthentication()
+    .AddIdentityServerJwt();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 // Swagger
@@ -19,8 +32,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "ToDo API",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
+        Title = "Mini Twitter API",
+        Description = "An ASP.NET Core Web API for managing Mini Twitter",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
@@ -34,6 +47,18 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+// Auto Mapper Configurations
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new ituminitwit.Server.Database.MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+// Logging
+builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 var app = builder.Build();
 
@@ -68,15 +93,26 @@ else
     app.UseHsts();
 }
 
+// Order of these is very important!
+app.UseIdentityServer();
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-app.UseRouting();
-
 app.MapRazorPages();
 app.MapControllers();
+app.MapFallbackToFile("index.html");
+
+Console.WriteLine("Configuration complete");
 
 app.Run();
 
