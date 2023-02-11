@@ -28,5 +28,12 @@ public class MessageController : ControllerBase
         var dtos = _mapper.Map<IEnumerable<MessageDto>>(messages);
         return dtos;
     }
+    
+    [HttpGet("{username}")]
+    public async Task<IEnumerable<MessageDto>> Get([FromRoute]string username)
+    {
+        var messages = await _repository.GetByUser(username);
+        return _mapper.Map<IEnumerable<MessageDto>>(messages);
+    }
 }
 
