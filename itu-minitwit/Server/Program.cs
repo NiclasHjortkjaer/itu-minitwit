@@ -107,20 +107,20 @@ else
     app.UseHsts();
 }
 
+app.UseHttpsRedirection();
+
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+
 // Order of these is very important!
+app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
-app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
-
-app.UseHttpsRedirection();
-
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
 
 app.MapRazorPages();
 app.MapControllers();
