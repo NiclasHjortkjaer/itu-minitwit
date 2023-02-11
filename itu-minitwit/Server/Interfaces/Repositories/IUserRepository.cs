@@ -10,6 +10,8 @@ public interface IUserRepository
     public Task<User> GetByName(string name); //might be redundant later, depends on implementation
     public Task<bool> Create(User user);    
     public Task<bool> ValidateCredentials(string name, string hashed_password); 
-    public Task<bool> Follow(int whoId, int whomId);
-    public Task<bool> Unfollow(int whoId, int whomId);
+    public Task Follow(string username);
+    public Task Unfollow(string username);
+    public Task<bool> IsFollowing(string username);
+    public Task<User?> GetCurrentUser();
 }

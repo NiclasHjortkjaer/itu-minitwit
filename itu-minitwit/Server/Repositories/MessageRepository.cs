@@ -16,8 +16,8 @@ public class MessageRepository : IMessageRepository
     public async Task<IEnumerable<Message>> Get()
     {
         return await _minitwitContext.Messages
-            .OrderByDescending(m => m.PublishDate)
             .Include(m => m.Author)
+            .OrderByDescending(m => m.PublishDate)
             // .Take(30)
             .ToListAsync();
     }
@@ -38,8 +38,13 @@ public class MessageRepository : IMessageRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Message>> GetByUser(int userId)
+    public async Task<IEnumerable<Message>> GetByUser(string username)
     {
-        throw new NotImplementedException();
+        return await _minitwitContext.Messages
+            .Include(m => m.Author)
+            .Where(m => m.Author.UserName == username)
+            .OrderByDescending(m => m.PublishDate)
+            // .Take(30)
+            .ToListAsync();
     }
 }

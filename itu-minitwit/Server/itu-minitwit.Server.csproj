@@ -66,9 +66,6 @@
     <None Include="Pages\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Database\minitwit.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="server.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

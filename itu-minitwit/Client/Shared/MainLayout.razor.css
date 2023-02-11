@@ -113,3 +113,12 @@
     width: 70px;
     margin-left: 5px;
 }
+
+div.page div.followstatus {
+    border: 1px solid #ccc;
+    background: #E3EBEA;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 3px;
+    font-size: 13px;
+}

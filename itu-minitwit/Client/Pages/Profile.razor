@@ -1,16 +1,58 @@
 ﻿@page "/profile/{Username}"
+@using itu_minitwit.Shared
+@using Components
+@inject HttpClient Http
 
-<p>Profile of @Username</p>
+<PageTitle>@Username's Timeline</PageTitle>
+
+<h2>@Username's Timeline</h2>
+
+<AuthorizeView>
+    
+    <div class="followstatus">
+        @if (Username == CurrentUserName)
+        {
+            <p>This is you!</p>
+        }
+        else
+        {
+            <p>Follow</p>
+        }
+    </div>
+</AuthorizeView>
+
+@if (Messages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach(var msg in Messages)
+    {
+        <Tweet Message="@msg"/>
+    }
+}
 
 @code{
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     [Parameter]
     public string Username { get; set; }
+    
+    public string CurrentUserName { get; set; }
+
+    public IEnumerable<MessageDto> Messages { get; set; }
 
     // Here it would make sense to call the backend, and find the UserDto associated with this name
     protected override async Task OnInitializedAsync()
     {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
 
+        if (user.Identity.IsAuthenticated)
+        {
+            CurrentUserName = user.Identity.Name;
+        }
+        Messages = await Http.GetFromJsonAsync<IEnumerable<MessageDto>>($"messages/{Username}");
     }
-
 }
