@@ -16,6 +16,7 @@ builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 // Add identity for authentication
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MinitwitContext>();
 
 Console.WriteLine("__________");
@@ -112,15 +113,17 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
+
 // Order of these is very important!
-app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
+app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
 
 app.MapRazorPages();
 app.MapControllers();
