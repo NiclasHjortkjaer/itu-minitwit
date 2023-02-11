@@ -18,8 +18,20 @@ builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<MinitwitContext>();
 
-builder.Services.AddIdentityServer()
-    .AddApiAuthorization<User, MinitwitContext>();
+Console.WriteLine("__________");
+Console.WriteLine("Running in development: " + builder.Environment.IsDevelopment());
+Console.WriteLine("__________");
+
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddIdentityServer()
+        .AddApiAuthorization<User, MinitwitContext>().AddSigningCredentials();
+}
+else
+{
+    builder.Services.AddIdentityServer()
+        .AddApiAuthorization<User, MinitwitContext>();
+}
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
@@ -59,6 +71,8 @@ builder.Services.AddSingleton(mapper);
 
 // Logging
 builder.Logging.SetMinimumLevel(LogLevel.Information);
+
+builder.WebHost.UseStaticWebAssets();
 
 var app = builder.Build();
 
