@@ -33,8 +33,7 @@ public class MessageController : ControllerBase
     public async Task<IEnumerable<MessageDto>> GetMyTimeline()
     {
         var messages = await _repository.GetMyTimeline();
-        var dtos = _mapper.Map<IEnumerable<MessageDto>>(messages);
-        return dtos;
+        return _mapper.Map<IEnumerable<MessageDto>>(messages);
     }
     
     [HttpGet("{username}")]

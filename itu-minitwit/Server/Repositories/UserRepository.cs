@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using itu_minitwit.Server.Database;
 using ituminitwit.Server.Interfaces.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -97,6 +98,9 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetCurrentUser()
     {
-        return await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+        var claimsIdentity = (ClaimsIdentity)_contextAccessor.HttpContext.User.Identity;
+        var userId = claimsIdentity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
+        return await _userManager.Users.Select(u => u).Where(u => u.Id == userId).FirstOrDefaultAsync();
     }
 }

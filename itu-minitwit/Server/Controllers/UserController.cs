@@ -11,29 +11,28 @@ namespace itu_minitwit.Server.Controllers;
 
 public class UserController : Controller
 {
-    private readonly ILogger<MessageController> _logger;
+    private readonly ILogger<UserController> _logger;
     private readonly IMapper _mapper;
     private readonly IUserRepository _repository;
 
-    public UserController(ILogger<MessageController> logger, IMapper mapper, IUserRepository repository)
+    public UserController(ILogger<UserController> logger, IMapper mapper, IUserRepository repository)
     {
         _logger = logger;
         _mapper = mapper;
         _repository = repository;
     }
     
-    [Authorize]
-    [HttpPut("follow/{username}")]
-    public async void Follow([FromRoute] string username)
+    [HttpPut("follow")]
+    public async void Follow(UserName userName)
     {
-        await _repository.Follow(username);
+        await _repository.Follow(userName.Name);
     }
     
     [Authorize]
-    [HttpPut("unfollow/{username}")]
-    public async void Unfollow([FromRoute] string username)
+    [HttpPut("unfollow")]
+    public async void Unfollow(UserName userName)
     {
-        await _repository.Unfollow(username);
+        await _repository.Unfollow(userName.Name);
     }
 
     [Authorize]
@@ -42,5 +41,11 @@ public class UserController : Controller
     {
         var user = await _repository.GetCurrentUser();
         return _mapper.Map<UserDto>(user);
+    }
+    
+    [HttpGet("{username}")]
+    public async Task<bool> IsFollowing([FromRoute]string username)
+    {
+        return await _repository.IsFollowing(username);
     }
 }

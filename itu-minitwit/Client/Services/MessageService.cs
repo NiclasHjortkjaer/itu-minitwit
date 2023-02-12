@@ -19,27 +19,13 @@ public class MessageService : IMessageService
     public async Task<IEnumerable<MessageDto>> GetTimeline()
     {
         var messages = await _publicHttpClient.Client.GetFromJsonAsync<IEnumerable<MessageDto>>("messages");
-        if (messages != null)
-        {
-            return messages;
-        }
-        else
-        {
-            return new List<MessageDto>();
-        }
+        return messages ?? new List<MessageDto>();
     }
     
     public async Task<IEnumerable<MessageDto>> GetMyTimeline()
     {
         var messages = await _httpClient.GetFromJsonAsync<IEnumerable<MessageDto>>("messages/mytimeline");
-        if (messages != null)
-        {
-            return messages;
-        }
-        else
-        {
-            return new List<MessageDto>();
-        }
+        return messages ?? new List<MessageDto>();
     }
 
     public async Task PostTweet(MessageText message)

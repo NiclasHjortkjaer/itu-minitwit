@@ -1,0 +1,30 @@
+.followstatus a {
+    color: #26776F !important;
+}
+
+.followstatus a:hover {
+    color: #333 !important;
+}
+
+.followstatus {
+    border: 1px solid #ccc;
+    background: #E3EBEA;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 3px;
+    font-size: 13px;
+}
+
+ul.flashes {
+    list-style: none;
+    padding: 0;
+}
+
+ul.flashes li {
+    background: #B9F3ED;
+    border: 1px solid #81CEC6;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 4px;
+    font-size: 13px;
+}

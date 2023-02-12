@@ -1,24 +1,48 @@
 ﻿@page "/profile/{Username}"
 @using itu_minitwit.Shared
 @using Components
+@using itu_minitwit.Client.Services
 @inject HttpClient Http
+@inject IUserService UserService
 
 <PageTitle>@Username's Timeline</PageTitle>
+@if (HasUpdated && IsFollowing)
+{
+    <ul class="flashes">
+        <li>You are now following @CurrentUserName</li>
+    </ul>    
+}
+else if (HasUpdated && !IsFollowing)
+ {
+     <ul class="flashes">
+         <li>You are no longer following @CurrentUserName</li>
+     </ul>    
+ }
+
 
 <h2>@Username's Timeline</h2>
 
 <AuthorizeView>
-    
-    <div class="followstatus">
-        @if (Username == CurrentUserName)
-        {
+    @if (Username == CurrentUserName)
+    {
+        <div class="followstatus">
             <p>This is you!</p>
-        }
-        else
-        {
-            <p>Follow</p>
-        }
-    </div>
+        </div>
+    }
+    else if (IsFollowing)
+    {
+        <div class="followstatus">
+            You are currently following this user.
+            <a @onclick="UnFollow">Unfollow user.</a>
+        </div>
+    } 
+    else
+    {
+        <div class="followstatus">
+            You are not yet following this user.
+            <a @onclick="Follow">Follow user.</a>
+        </div>
+    }
 </AuthorizeView>
 
 @if (Messages == null)
@@ -38,10 +62,13 @@ else
 
     [Parameter]
     public string Username { get; set; }
-    
-    public string CurrentUserName { get; set; }
 
-    public IEnumerable<MessageDto> Messages { get; set; }
+    private string CurrentUserName { get; set; }
+
+    private IEnumerable<MessageDto> Messages { get; set; }
+
+    private bool IsFollowing { get; set; } = false;
+    private bool HasUpdated { get; set; } = false;
 
     // Here it would make sense to call the backend, and find the UserDto associated with this name
     protected override async Task OnInitializedAsync()
@@ -54,5 +81,30 @@ else
             CurrentUserName = user.Identity.Name;
         }
         Messages = await Http.GetFromJsonAsync<IEnumerable<MessageDto>>($"messages/{Username}");
+        IsFollowing = await UserService.IsFollowing(CurrentUserName);
+    }
+
+    private async void Follow()
+    {
+        var UserName = new UserName
+        {
+            Name = Username
+        };
+        await UserService.Follow(UserName);
+        IsFollowing = true;
+        HasUpdated = true;
+        StateHasChanged();
+    }
+    
+    private async void UnFollow()
+    {
+        var UserName = new UserName
+        {
+            Name = Username
+        };
+        await UserService.UnFollow(UserName);
+        IsFollowing = false;
+        HasUpdated = true;
+        StateHasChanged();
     }
 }
