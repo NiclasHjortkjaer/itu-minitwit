@@ -1,6 +1,6 @@
 using MiniTwit.Database;
 
-namespace MiniTwit.Services;
+namespace MiniTwit.Repositories;
 
 public interface IMessageRepository
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 
-namespace MiniTwit.Services;
+namespace MiniTwit.Repositories;
 
 public class MessageRepository : IMessageRepository
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MiniTwit.Services;
+using MiniTwit.Repositories;
 
 namespace MiniTwit.Pages;
 

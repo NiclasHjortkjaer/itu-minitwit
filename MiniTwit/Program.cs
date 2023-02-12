@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
-using MiniTwit.Services;
+using MiniTwit.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

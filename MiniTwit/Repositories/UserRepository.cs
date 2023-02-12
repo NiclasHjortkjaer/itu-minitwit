@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 
-namespace MiniTwit.Services;
+namespace MiniTwit.Repositories;
 
 public class UserRepository : IUserRepository
 {
