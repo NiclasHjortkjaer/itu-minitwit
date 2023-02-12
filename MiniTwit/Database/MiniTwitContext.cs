@@ -8,10 +8,19 @@ public class MiniTwitContext : DbContext
     public DbSet<Message> Messages { get; set; }
     public string DbPath { get; }
 
-    public MiniTwitContext()
+    public MiniTwitContext(IWebHostEnvironment env)
     {
-        var path = Directory.GetCurrentDirectory();
-        DbPath = System.IO.Path.Join(path, "Database/minitwit.db");
+        if (env.IsDevelopment())
+        {
+            var path = Directory.GetCurrentDirectory();
+            DbPath = System.IO.Path.Join(path, "Database/minitwit.db");
+        }
+        else
+        {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "minitwit.db");
+        }
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");

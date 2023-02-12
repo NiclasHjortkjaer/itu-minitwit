@@ -40,16 +40,16 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<MiniTwitContext>())
+{
+    context.Database.Migrate();
+    if (app.Environment.IsDevelopment()) context.SeedDatabase();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    using (var scope = app.Services.CreateScope())
-    using (var context = scope.ServiceProvider.GetService<MiniTwitContext>())
-    {
-        context.Database.Migrate();
-        context.SeedDatabase();
-    }
-
     app.UseSwagger();
     app.UseSwaggerUI();
 }
