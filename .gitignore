@@ -1,6 +1,8 @@
 .idea/*
 __pycache__/*
 minitwit.db
+minitwit.db-shm
+minitwit.db-wal
 .DS_Store
 xs/*
 
