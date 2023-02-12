@@ -6,15 +6,15 @@ namespace MiniTwit.Pages;
 
 public class Logout : PageModel
 {
-    private readonly IUserService _userService;
-    public Logout(IUserService userService)
+    private readonly IUserRepository _userRepository;
+    public Logout(IUserRepository userRepository)
     {
-        _userService = userService;
+        _userRepository = userRepository;
     }
     
     public async Task<IActionResult> OnGetAsync()
     {
-        await _userService.Logout();
+        await _userRepository.Logout();
         return Redirect("/");
     }
 }

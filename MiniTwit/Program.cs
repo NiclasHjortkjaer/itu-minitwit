@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<MiniTwitContext>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 builder.Services.AddDistributedMemoryCache();
 

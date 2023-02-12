@@ -1,19 +1,19 @@
 @page "/"
 @using MiniTwit.Services
 @model MiniTwit.Pages.MyTimeline
-@inject IMessageService MessageService
-@inject IUserService UserService
+@inject IMessageRepository MessageRepository
+@inject IUserRepository UserRepository
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = "Shared/_Layout";
-    var messages = await MessageService.GetFromFollows();
+    var messages = await MessageRepository.GetFromFollows();
 }
 
 <div>
     <h2>My Timeline</h2>
     <div class="twitbox">
-            <h3>What's on your mind @((await UserService.GetCurrent()).Username)?</h3>
+            <h3>What's on your mind @((await UserRepository.GetCurrent()).Username)?</h3>
             <form method="post">
               <p><input type="text" asp-for="Text" size="60">
               <input type="submit" value="Share">

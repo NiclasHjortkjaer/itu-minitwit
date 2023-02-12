@@ -7,12 +7,12 @@ using MiniTwit.Database;
 
 namespace MiniTwit.Services;
 
-public class UserService : IUserService
+public class UserRepository : IUserRepository
 {
     private readonly MiniTwitContext _miniTwitContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UserService(MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
+    public UserRepository(MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
     {
         _miniTwitContext = miniTwitContext;
         _httpContextAccessor = httpContextAccessor;

@@ -3,15 +3,15 @@ using MiniTwit.Database;
 
 namespace MiniTwit.Services;
 
-public class MessageService : IMessageService
+public class MessageRepository : IMessageRepository
 {
     private readonly MiniTwitContext _miniTwitContext;
-    private readonly IUserService _userService;
+    private readonly IUserRepository _userRepository;
 
-    public MessageService(MiniTwitContext miniTwitContext, IUserService userService)
+    public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository)
     {
         _miniTwitContext = miniTwitContext;
-        _userService = userService;
+        _userRepository = userRepository;
     }
     
     public async Task<IEnumerable<Message>> Get()
@@ -35,7 +35,7 @@ public class MessageService : IMessageService
 
     public async Task<IEnumerable<Message>> GetFromFollows()
     {
-        var user = await _userService.GetCurrent();
+        var user = await _userRepository.GetCurrent();
         var follows = (await _miniTwitContext.Users
             .Include(u => u.Follows)
             .FirstOrDefaultAsync(u => u.Id == user.Id))!.Follows;
@@ -49,7 +49,7 @@ public class MessageService : IMessageService
 
     public async Task Create(string text)
     {
-        var user = await _userService.GetCurrent();
+        var user = await _userRepository.GetCurrent();
         var message = new Message() { Author = user, Text = text, PublishDate = DateTime.Now, Flagged = 0 };
 
         _miniTwitContext.Add(message);

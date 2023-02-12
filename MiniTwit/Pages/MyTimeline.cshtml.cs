@@ -7,20 +7,20 @@ namespace MiniTwit.Pages;
 
 public class MyTimeline : PageModel
 {
-    private readonly IUserService _userService;
-    private readonly IMessageService _messageService;
+    private readonly IUserRepository _userRepository;
+    private readonly IMessageRepository _messageRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
     
-    public MyTimeline(IUserService userService, IMessageService messageService, IHttpContextAccessor httpContextAccessor)
+    public MyTimeline(IUserRepository userRepository, IMessageRepository messageRepository, IHttpContextAccessor httpContextAccessor)
     {
-        _userService = userService;
-        _messageService = messageService;
+        _userRepository = userRepository;
+        _messageRepository = messageRepository;
         _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await _userService.GetCurrent();
+        var user = await _userRepository.GetCurrent();
 
         if (user == null) return Redirect("/public");
         
@@ -34,7 +34,7 @@ public class MyTimeline : PageModel
     {
         if (Text != null)
         {
-            await _messageService.Create(Text);
+            await _messageRepository.Create(Text);
             _httpContextAccessor.HttpContext.Session.SetString("flashes", "Your message was recorded.");
         }
         

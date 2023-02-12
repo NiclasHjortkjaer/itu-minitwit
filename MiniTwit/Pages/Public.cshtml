@@ -1,11 +1,11 @@
 @page
 @using MiniTwit.Services
 @model MiniTwit.Pages.Public
-@inject IMessageService MessageService
+@inject IMessageRepository MessageRepository
 
 @{
     Layout = "Shared/_Layout";
-    var messages = await MessageService.Get();
+    var messages = await MessageRepository.Get();
 }
 
 <div>

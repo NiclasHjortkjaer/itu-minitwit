@@ -6,11 +6,11 @@ namespace MiniTwit.Pages;
 
 public class Login : PageModel
 {
-    private readonly IUserService _userService;
+    private readonly IUserRepository _userRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public Login(IUserService userService, IHttpContextAccessor httpContextAccessor)
+    public Login(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
     {
-        _userService = userService;
+        _userRepository = userRepository;
         _httpContextAccessor = httpContextAccessor;
     }
     
@@ -26,7 +26,7 @@ public class Login : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        await _userService.Login(Username, Password);
+        await _userRepository.Login(Username, Password);
         _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were logged in.");
         return Redirect("/");
     }

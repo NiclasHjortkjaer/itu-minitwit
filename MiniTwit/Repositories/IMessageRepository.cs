@@ -2,7 +2,7 @@ using MiniTwit.Database;
 
 namespace MiniTwit.Services;
 
-public interface IMessageService
+public interface IMessageRepository
 {
     public Task<IEnumerable<Message>> Get();
     public Task<IEnumerable<Message>> GetByUser(string username);

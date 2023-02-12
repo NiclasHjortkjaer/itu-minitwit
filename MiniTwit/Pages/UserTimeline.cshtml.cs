@@ -6,10 +6,10 @@ namespace MiniTwit.Pages;
 
 public class UserTimeline : PageModel
 {
-    private readonly IUserService _userService;
-    public UserTimeline(IUserService userService)
+    private readonly IUserRepository _userRepository;
+    public UserTimeline(IUserRepository userRepository)
     {
-        _userService = userService;
+        _userRepository = userRepository;
     }
     public string? Username { get; set; }
     public void OnGet(string? username)
@@ -19,7 +19,7 @@ public class UserTimeline : PageModel
 
     public async Task<IActionResult> OnPostAsync(string? username)
     {
-        await _userService.ToggleFollowing(username);
+        await _userRepository.ToggleFollowing(username);
 
         return Redirect($"/{username}");
     }

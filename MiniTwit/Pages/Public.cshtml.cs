@@ -6,10 +6,10 @@ namespace MiniTwit.Pages;
 
 public class Public : PageModel
 {
-    private readonly IUserService _userService;
-    public Public(IUserService userService)
+    private readonly IUserRepository _userRepository;
+    public Public(IUserRepository userRepository)
     {
-        _userService = userService;
+        _userRepository = userRepository;
     }
     
     public void OnGet()

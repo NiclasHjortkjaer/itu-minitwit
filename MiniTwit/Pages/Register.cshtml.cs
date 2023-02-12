@@ -6,11 +6,11 @@ namespace MiniTwit.Pages;
 
 public class Register : PageModel
 {
-    private readonly IUserService _userService;
+    private readonly IUserRepository _userRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public Register(IUserService userService, IHttpContextAccessor httpContextAccessor)
+    public Register(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
     {
-        _userService = userService;
+        _userRepository = userRepository;
         _httpContextAccessor = httpContextAccessor;
     }
     
@@ -32,7 +32,7 @@ public class Register : PageModel
     {
         if (Username != null && Email != null && Password != null && PasswordRepeat != null)
         {
-            await _userService.Register(Username, Email, Password, PasswordRepeat);
+            await _userRepository.Register(Username, Email, Password, PasswordRepeat);
             _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were successfully registered.");
             return Redirect("/login");
         }

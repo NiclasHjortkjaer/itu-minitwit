@@ -1,5 +1,5 @@
 @using MiniTwit.Services
-@inject IUserService UserService
+@inject IUserRepository UserRepository
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -21,12 +21,12 @@
 <div class=page>
     <h1>MiniTwit</h1>
     <div class=navigation>
-        @if (await UserService.GetCurrent() != null)
+        @if (await UserRepository.GetCurrent() != null)
         {
             <div>
                 <a href="/">my timeline</a> |
                 <a href="/public">public timeline</a> |
-                <a href="/logout">sign out [@((await UserService.GetCurrent()).Username)]</a>
+                <a href="/logout">sign out [@((await UserRepository.GetCurrent()).Username)]</a>
             </div>
         }
         else

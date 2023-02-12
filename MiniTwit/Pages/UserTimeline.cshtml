@@ -2,13 +2,13 @@
 @using MiniTwit.Services
 @model MiniTwit.Pages.UserTimeline
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@inject IMessageService MessageService
-@inject IUserService UserService
+@inject IMessageRepository MessageRepository
+@inject IUserRepository UserRepository
 
 @{
     Layout = "Shared/_Layout";
-    var messages = await MessageService.GetByUser(Model.Username);
-    var currentUser = await UserService.GetCurrent();
+    var messages = await MessageRepository.GetByUser(Model.Username);
+    var currentUser = await UserRepository.GetCurrent();
 }
 
 <div>
@@ -19,7 +19,7 @@
             {
                 <span>This is you!</span>
             }
-            else if (await UserService.IsFollowing(Model.Username))
+            else if (await UserRepository.IsFollowing(Model.Username))
             {
                 <div>
                     You are currently following this user.

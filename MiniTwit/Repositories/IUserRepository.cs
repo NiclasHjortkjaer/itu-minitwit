@@ -2,7 +2,7 @@ using MiniTwit.Database;
 
 namespace MiniTwit.Services;
 
-public interface IUserService
+public interface IUserRepository
 {
     public Task<User> Register(string username, string email, string password, string passwordRepeat);
     public Task<User> Login(string username, string password);
