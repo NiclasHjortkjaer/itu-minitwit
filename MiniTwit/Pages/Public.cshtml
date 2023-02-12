@@ -1,0 +1,30 @@
+@page
+@using MiniTwit.Services
+@model MiniTwit.Pages.Public
+@inject IMessageService MessageService
+
+@{
+    Layout = "Shared/_Layout";
+    var messages = await MessageService.Get();
+}
+
+<div>
+    <h2> Public Timeline </h2>
+    <ul class="messages">
+        @foreach (var m in messages)
+        {
+            <li>
+                <img style="width: 48px; height: 48px;" src="https://api.dicebear.com/5.x/identicon/svg?seed=@m.Author.Username">
+                <strong>
+                    <a href="/@m.Author.Username">@m.Author.Username</a>
+                </strong>
+                @m.Text
+                <small>&mdash; @m.PublishDate</small>
+            </li>
+        }
+        @if (messages.Count() == 0)
+        {
+            <li><em>There's no message so far.</em></li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,25 @@
+@page
+@model MiniTwit.Pages.Register
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<div>
+    <h2>Sign Up</h2>
+    @* {% if error %}<div class=error><strong>Error:</strong> {{ error }}</div>{% endif %} *@
+    <form method="post">
+      <dl>
+        <dt>Username:
+        <dd><input type="text" asp-for="Username" size="30">
+        <dt>E-Mail:
+        <dd><input type="text" asp-for="Email" size="30">
+        <dt>Password:
+        <dd><input type="password" asp-for="Password" size="30">
+        <dt>Password <small>(repeat)</small>:
+        <dd><input type="password" asp-for="PasswordRepeat" size="30">
+      </dl>
+      <div class="actions"><input type="submit"></div>
+    </form>
+</div>

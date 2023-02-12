@@ -1,0 +1,56 @@
+@using MiniTwit.Services
+@inject IUserService UserService
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var flashes = HttpContextAccessor.HttpContext.Session.GetString("flashes");
+    if (flashes != null)
+    {
+        HttpContextAccessor.HttpContext.Session.Remove("flashes");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    @* <title> Welcome | MiniTwit</title> *@
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class=page>
+    <h1>MiniTwit</h1>
+    <div class=navigation>
+        @if (await UserService.GetCurrent() != null)
+        {
+            <div>
+                <a href="/">my timeline</a> |
+                <a href="/public">public timeline</a> |
+                <a href="/logout">sign out [@((await UserService.GetCurrent()).Username)]</a>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a href="/public">public timeline</a> |
+                <a href="/register">sign up</a> |
+                <a href="/login">sign in</a>
+            </div>
+        }
+    </div>
+        @if (flashes != null)
+        {
+            <ul class=flashes>
+                <li> @flashes </li>
+            </ul>
+        }
+    <div class=body>
+        @RenderBody()
+    </div>
+    <div class=footer>
+        MiniTwit &mdash; An ASP.NET Core Application
+    </div>
+</div>
+
+</body>
+</html>
