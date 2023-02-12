@@ -2,7 +2,7 @@
 @using itu_minitwit.Shared
 @using Components
 @using itu_minitwit.Client.Services
-@inject HttpClient Http
+@inject PublicHttpClient Http
 @inject IUserService UserService
 
 <PageTitle>@Username's Timeline</PageTitle>
@@ -79,9 +79,9 @@ else
         if (user.Identity.IsAuthenticated)
         {
             CurrentUserName = user.Identity.Name;
+            IsFollowing = await UserService.IsFollowing(CurrentUserName);
         }
-        Messages = await Http.GetFromJsonAsync<IEnumerable<MessageDto>>($"messages/{Username}");
-        IsFollowing = await UserService.IsFollowing(CurrentUserName);
+        Messages = await Http.Client.GetFromJsonAsync<IEnumerable<MessageDto>>($"messages/{Username}");
     }
 
     private async void Follow()
