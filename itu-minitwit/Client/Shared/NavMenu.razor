@@ -3,6 +3,18 @@
 @inject SignOutSessionStateManager SignOutManager
 
 <div class="flex-row">
+    <AuthorizeView>
+        <Authorized>
+            <div class="nav-item px-3 sign-out">
+                <NavLink class="twit-link" @onclick="MyTimeline">
+                    <div class="link-content">
+                        my timeline
+                    </div>
+                </NavLink>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    
     <div class="nav-item px-3">
         <NavLink class="twit-link" href="" Match="NavLinkMatch.All">
             <div class="link-content">
@@ -10,7 +22,7 @@
             </div>
         </NavLink>
     </div>
-    
+
     <AuthorizeView>
         <NotAuthorized>
             <div class="nav-item px-3">
@@ -36,7 +48,7 @@
                     </div>
                 </NavLink>
             </div>
-            
+
             <div class="profile-information">
                 <a href="profile/@(context.User.Identity?.Name!.Split("@")[0])">Hello, @context.User.Identity?.Name!</a>
             </div>
@@ -49,5 +61,9 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+    private void MyTimeline(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("MyTimeline");
     }
 }

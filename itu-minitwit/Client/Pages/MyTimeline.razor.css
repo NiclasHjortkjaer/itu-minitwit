@@ -1,0 +1,61 @@
+#postinput {
+    background: white;
+    border: 1px solid #BFE6E2;
+    padding: 2px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: #105751;
+    width: 585px !important;
+}
+
+.submit {
+    background: #105751;
+    border: 1px solid #073B36;
+    padding: 1px 3px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: white;
+    width: 70px;
+    margin-left: 5px;
+}
+
+.twitbox {
+    margin: 10px 0;
+    padding: 5px;
+    background: #F0FAF9;
+    border: 1px solid #94E2DA;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.twitbox h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #2C7E76;
+}
+
+.twitbox p {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+
+ul.flashes {
+    list-style: none;
+    margin: 10px 10px 0 10px;
+    padding: 0;
+}
+
+ul.flashes li {
+    background: #B9F3ED;
+    border: 1px solid #81CEC6;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 4px;
+    font-size: 13px;
+}

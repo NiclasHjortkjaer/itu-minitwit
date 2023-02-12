@@ -1,0 +1,61 @@
+@page "/MyTimeline"
+@using itu_minitwit.Shared
+@using Components
+@using itu_minitwit.Client.Services
+@inject IMessageService messageService
+
+<PageTitle>MyTimeline</PageTitle>
+<h1>My Timeline</h1>
+@if (hasPosted)
+{
+    <ul class="flashes">
+        <li>Your message was recorded</li>
+    </ul>    
+}
+
+<div class="twitbox">
+    <AuthorizeView>
+        <Authorized>
+            <h3>What's on your mind @context.User.Identity?.Name!?</h3>
+        </Authorized>
+    </AuthorizeView>
+
+    <EditForm Model="@message" OnSubmit="PostTweet">
+        <p>
+            <InputText id="postinput" class="form-control"
+                       @bind-Value="message.Text"/>
+            <input type="submit" class="submit" value="Share"/>
+        </p>
+    </EditForm>
+</div>
+
+@if (_messages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach(var msg in _messages)
+    {
+        <Tweet Message="@msg"/>
+    }
+}
+
+@code {
+    private IEnumerable<MessageDto> _messages;
+    private MessageText message { get; set; } = new MessageText();
+    private bool hasPosted { get; set; } = false;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _messages = await messageService.GetMyTimeline();
+    }
+    
+    private async void PostTweet()
+    {
+        await messageService.PostTweet(message);
+        _messages = await messageService.GetMyTimeline();
+        hasPosted = true;
+        StateHasChanged();
+    }
+}

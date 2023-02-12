@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ituminitwit.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixAuthorID : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -221,8 +221,7 @@ namespace ituminitwit.Server.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    AuthorId1 = table.Column<string>(type: "TEXT", nullable: true),
+                    AuthorId = table.Column<string>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
                     PublishDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Flagged = table.Column<int>(type: "INTEGER", nullable: true)
@@ -231,10 +230,11 @@ namespace ituminitwit.Server.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_AuthorId1",
-                        column: x => x.AuthorId1,
+                        name: "FK_Messages_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,9 +266,9 @@ namespace ituminitwit.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "02e661a6-4d36-4fc7-8f59-3158ecfa6f7a", null, "Administrator", "ADMINISTRATOR" },
-                    { "19aded04-57cf-4f76-9cda-5ad70cbe11d6", null, "Registered", "REGISTERED" },
-                    { "a5372157-7fa9-4c4d-acf7-bee6f3e80d80", null, "Visitor", "VISITOR" }
+                    { "73b3c8c6-d2d8-4163-88aa-15679ec6988e", null, "Administrator", "ADMINISTRATOR" },
+                    { "f56fd349-7ed0-468f-9fe5-c6e4d7e07fae", null, "Visitor", "VISITOR" },
+                    { "f5bad18e-51d8-4073-9826-b23f35449dc7", null, "Registered", "REGISTERED" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -325,9 +325,9 @@ namespace ituminitwit.Server.Migrations
                 column: "Use");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_AuthorId1",
+                name: "IX_Messages_AuthorId",
                 table: "Messages",
-                column: "AuthorId1");
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",

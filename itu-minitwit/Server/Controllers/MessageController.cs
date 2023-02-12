@@ -29,11 +29,26 @@ public class MessageController : ControllerBase
         return dtos;
     }
     
+    [HttpGet("mytimeline")]
+    public async Task<IEnumerable<MessageDto>> GetMyTimeline()
+    {
+        var messages = await _repository.GetMyTimeline();
+        var dtos = _mapper.Map<IEnumerable<MessageDto>>(messages);
+        return dtos;
+    }
+    
     [HttpGet("{username}")]
     public async Task<IEnumerable<MessageDto>> Get([FromRoute]string username)
     {
         var messages = await _repository.GetByUser(username);
         return _mapper.Map<IEnumerable<MessageDto>>(messages);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async void Post(MessageText message)
+    {
+        await _repository.Create(message);
     }
 }
 
