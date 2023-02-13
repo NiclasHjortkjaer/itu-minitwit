@@ -4,6 +4,7 @@
 @inject IMessageRepository MessageRepository
 
 @{
+    ViewData["Title"] = "Welcome | MiniTwit";
     Layout = "Shared/_Layout";
     var messages = await MessageRepository.Get();
 }
