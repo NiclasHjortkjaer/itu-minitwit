@@ -10,4 +10,5 @@ public interface IUserRepository
     public Task<User?> GetCurrent();
     public Task<bool> IsFollowing(string username);
     public Task ToggleFollowing(string username);
+    public Task<User?> Exists(string username);
 }

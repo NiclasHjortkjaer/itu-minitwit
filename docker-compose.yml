@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: Minitwit/Dockerfile
     ports:
-      - 7112:7112
+      - 8765:7112
     environment:
       - ASPNETCORE_URLS=http://+:7112/
     networks:

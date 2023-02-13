@@ -27,7 +27,7 @@ public class MessageRepository : IMessageRepository
     {
         return await _miniTwitContext.Messages
             .Include(m => m.Author)
-            .Where(m => m.Author.Username == username)
+            .Where(m => m.Author.Username.ToLower() == username.ToLower())
             .OrderByDescending(m => m.PublishDate)
             // .Take(30)
             .ToListAsync();

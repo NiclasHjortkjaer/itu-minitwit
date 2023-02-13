@@ -22,7 +22,7 @@
                 <small>&mdash; @m.PublishDate</small>
             </li>
         }
-        @if (messages.Count() == 0)
+        @if (!messages.Any())
         {
             <li><em>There's no message so far.</em></li>
         }

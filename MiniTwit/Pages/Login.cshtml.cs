@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MiniTwit.Repositories;
 
 namespace MiniTwit.Pages;
@@ -26,8 +27,17 @@ public class Login : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        await _userRepository.Login(Username, Password);
-        _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were logged in.");
-        return Redirect("/");
+        if (Username == null || Password == null) return Page();
+        try
+        {
+            await _userRepository.Login(Username, Password);
+            _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were logged in.");
+            return Redirect("/");
+        }
+        catch (Exception e)
+        {
+            _httpContextAccessor.HttpContext.Session.SetString("flashes", e.Message);
+            return Page();
+        }
     }
 }

@@ -32,10 +32,19 @@ public class Register : PageModel
     {
         if (Username != null && Email != null && Password != null && PasswordRepeat != null)
         {
-            await _userRepository.Register(Username, Email, Password, PasswordRepeat);
-            _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were successfully registered.");
-            return Redirect("/login");
+            try
+            {
+                await _userRepository.Register(Username, Email, Password, PasswordRepeat);
+                _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were successfully registered.");
+                return Redirect("/login");
+
+            }
+            catch (Exception e)
+            {
+                _httpContextAccessor.HttpContext.Session.SetString("flashes", e.Message);
+                return Page();
+            }
         }
-        return Redirect("/register");
+        return Page();
     }
 }

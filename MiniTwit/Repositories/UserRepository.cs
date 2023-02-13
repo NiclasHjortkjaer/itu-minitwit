@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,10 @@ public class UserRepository : IUserRepository
     
     public async Task<User> Register(string username, string email, string password, string passwordRepeat)
     {
-        if (password != passwordRepeat) throw new ArgumentException();
-        if (await _miniTwitContext.Users.AnyAsync(u => u.Username == username || u.Email == email)) throw new ArgumentException();
+        if (password != passwordRepeat) throw new ArgumentException("Same password must be entered twice.");
+        if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_]+$") || username is "/" or "public" or "login" or "register" or "logout") throw new ArgumentException("Forbidden username.");
+        if (await _miniTwitContext.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower())) throw new ArgumentException("Username is already taken.");
+        if (await _miniTwitContext.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower())) throw new ArgumentException("Email is already taken.");
 
         var user = new User() { 
             PwHash = HashPassword(password), 
@@ -38,9 +41,9 @@ public class UserRepository : IUserRepository
 
     public async Task<User> Login(string username, string password)
     {
-        var user = await _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username == username);
-        if (user == null) throw new ArgumentException();
-        if (HashPassword(password) != user.PwHash) throw new ArgumentException();
+        var user = await _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+        if (user == null) throw new ArgumentException("No user with the given username.");
+        if (HashPassword(password) != user.PwHash) throw new ArgumentException("Password is wrong.");
 
         var claims = new List<Claim>
         {
@@ -76,7 +79,7 @@ public class UserRepository : IUserRepository
     {
         var user = await _miniTwitContext.Users
             .Include(u => u.Followers)
-            .FirstOrDefaultAsync(u => u.Username == username);
+            .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
         var currentUser = await GetCurrent();
         if (user == null || currentUser == null) throw new ArgumentException();
 
@@ -87,7 +90,7 @@ public class UserRepository : IUserRepository
     {
         var user = await _miniTwitContext.Users
             .Include(u => u.Followers)
-            .FirstOrDefaultAsync(u => u.Username == username);
+            .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
         var currentUser = await GetCurrent();
         if (user == null || currentUser == null) throw new ArgumentException();
 
@@ -103,6 +106,11 @@ public class UserRepository : IUserRepository
         }
 
         await _miniTwitContext.SaveChangesAsync();
+    }
+
+    public Task<User?> Exists(string username)
+    {
+        return _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
     }
 
 
