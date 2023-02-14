@@ -22,7 +22,7 @@ namespace MiniTwit.Controllers
             _userRepository = userRepository;
         }
         
-        // GET: Simulator
+        // POST: Simulator/register
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO registerDto)
         {
