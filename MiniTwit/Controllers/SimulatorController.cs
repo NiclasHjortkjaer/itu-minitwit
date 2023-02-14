@@ -14,17 +14,46 @@ namespace MiniTwit.Controllers
     public class SimulatorController : ControllerBase
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly IUserRepository _userRepository;
 
-        public SimulatorController(IMessageRepository messageRepository)
+        public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository)
         {
             _messageRepository = messageRepository;
+            _userRepository = userRepository;
         }
         
         // GET: Simulator
-        [HttpGet("register")]
-        public IEnumerable<string> Get()
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterDTO registerDto)
         {
-            return new string[] { "value1", "value2" };
+            string error = null;
+            if (registerDto.Username == null)
+            {
+                error = "You have to enter a username";
+            } else if (registerDto.Email == null || !registerDto.Email.Contains("@"))
+            {
+                error = "You have to enter a valid email address";
+            } else if (registerDto.Pwd == null)
+            {
+                error = "You have to enter a password";
+            } else if (await _userRepository.Exists(registerDto.Username) != null)
+            {
+                error = "The username is already taken";
+            } 
+            else
+            {
+                await _userRepository.Register(registerDto.Username, registerDto.Email, registerDto.Pwd,
+                    registerDto.Pwd);
+            }
+
+            if (error != null)
+            {
+                return StatusCode(400, new { status = 400, error_msg = error});
+            }
+            else
+            {
+                return StatusCode(204);
+            }
         }
 
         // GET: Simulator/msgs
