@@ -14,6 +14,7 @@ public class MessageRepository : IMessageRepository
         _userRepository = userRepository;
     }
     
+    //TODO: LIMIT!
     public async Task<IEnumerable<Message>> Get()
     {
         return await _miniTwitContext.Messages
