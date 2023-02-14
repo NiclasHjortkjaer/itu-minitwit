@@ -116,8 +116,7 @@ public class UserRepository : IUserRepository
 
     public static string HashPassword(string password)
     {
-        HashAlgorithm sha = SHA256.Create();
-        var hashed = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        var hashed = SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(password));
         return System.Text.Encoding.Default.GetString(hashed);
     }
 }
