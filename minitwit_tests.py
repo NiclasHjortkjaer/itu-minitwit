@@ -8,26 +8,21 @@
     :copyright: (c) 2010 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
 """
+import minitwit
 import unittest
-import uuid
+import tempfile
 
-from requests import Session
-from urllib.parse import urljoin
-
-class LiveServerSession(Session):
-    def __init__(self, base_url=None):
-        super().__init__()
-        self.base_url = base_url
-
-    def request(self, method, url, *args, **kwargs):
-        joined_url = urljoin(self.base_url, url)
-        return super().request(method, joined_url, *args, **kwargs)
 
 class MiniTwitTestCase(unittest.TestCase):
 
     def setUp(self):
         """Before each test, set up a blank database"""
-        self.app = LiveServerSession("http://localhost:5108") #TODO: replace with url!
+        self.db = tempfile.NamedTemporaryFile()
+        self.app = minitwit.app.test_client()
+        minitwit.DATABASE = self.db.name
+        minitwit.init_db()
+
+    # helper functions
 
     def register(self, username, password, password2=None, email=None):
         """Helper function to register a user"""
@@ -36,18 +31,18 @@ class MiniTwitTestCase(unittest.TestCase):
         if email is None:
             email = username + '@example.com'
         return self.app.post('/register', data={
-            'username': username,
-            'password': password,
-            'password2': password2,
-            'email': email,
-        }, allow_redirects=True)
+            'username':     username,
+            'password':     password,
+            'password2':    password2,
+            'email':        email,
+        }, follow_redirects=True)
 
     def login(self, username, password):
         """Helper function to login"""
         return self.app.post('/login', data={
             'username': username,
             'password': password
-        }, allow_redirects=True)
+        }, follow_redirects=True)
 
     def register_and_login(self, username, password):
         """Registers and logs in in one go"""
@@ -56,12 +51,12 @@ class MiniTwitTestCase(unittest.TestCase):
 
     def logout(self):
         """Helper function to logout"""
-        return self.app.get('/logout', allow_redirects=True)
+        return self.app.get('/logout', follow_redirects=True)
 
     def add_message(self, text):
         """Records a message"""
         rv = self.app.post('/add_message', data={'text': text},
-                           allow_redirects=True)
+                                    follow_redirects=True)
         if text:
             assert 'Your message was recorded' in rv.text
         return rv
@@ -70,11 +65,10 @@ class MiniTwitTestCase(unittest.TestCase):
 
     def test_register(self):
         """Make sure registering works"""
-        username = str(uuid.uuid4())
-        rv = self.register(username, 'default')
+        rv = self.register('user1', 'default')
         assert 'You were successfully registered ' \
                'and can login now' in rv.text
-        rv = self.register(username, 'default')
+        rv = self.register('user1', 'default')
         assert 'The username is already taken' in rv.text
         rv = self.register('', 'default')
         assert 'You have to enter a username' in rv.text
@@ -122,7 +116,7 @@ class MiniTwitTestCase(unittest.TestCase):
         assert 'the message by bar' in rv.text
 
         # now let's follow foo
-        rv = self.app.get('/foo/follow', allow_redirects=True)
+        rv = self.app.get('/foo/follow', follow_redirects=True)
         assert 'You are now following &#34;foo&#34;' in rv.text
 
         # we should now see foo's message
@@ -139,11 +133,12 @@ class MiniTwitTestCase(unittest.TestCase):
         assert 'the message by bar' not in rv.text
 
         # now unfollow and check if that worked
-        rv = self.app.get('/foo/unfollow', allow_redirects=True)
+        rv = self.app.get('/foo/unfollow', follow_redirects=True)
         assert 'You are no longer following &#34;foo&#34;' in rv.text
         rv = self.app.get('/')
         assert 'the message by foo' not in rv.text
         assert 'the message by bar' in rv.text
+
 
 if __name__ == '__main__':
     unittest.main()
