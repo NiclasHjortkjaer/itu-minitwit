@@ -108,9 +108,9 @@ public class UserRepository : IUserRepository
         await _miniTwitContext.SaveChangesAsync();
     }
 
-    public Task<User?> Exists(string username)
+    public async Task<User?> Exists(string username)
     {
-        return _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+        return await _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
     }
 
 
