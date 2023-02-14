@@ -20,10 +20,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddRazorPages()
-    .AddRazorPagesOptions(options =>
-    {
-    });
+builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -33,6 +30,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
         options.LoginPath = "/login";
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAllForDevelopment",
+        policyBuilder =>
+        {
+            policyBuilder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -52,6 +61,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowAllForDevelopment");
 }
 
 app.UseHttpsRedirection();

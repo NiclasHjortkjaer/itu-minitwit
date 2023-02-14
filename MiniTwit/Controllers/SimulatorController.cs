@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MiniTwit.DTOs;
 using MiniTwit.Repositories;
@@ -24,7 +19,7 @@ namespace MiniTwit.Controllers
         
         // POST: Simulator/register
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterDTO registerDto)
+        public async Task<ActionResult> Register([FromBody] RegisterDTO registerDto)
         {
             string error = null;
             if (registerDto.Username == null)
@@ -36,13 +31,13 @@ namespace MiniTwit.Controllers
             } else if (registerDto.Pwd == null)
             {
                 error = "You have to enter a password";
-            } else if (await _userRepository.Exists(registerDto.Username) != null)
+            } else if (await _userRepository.Exists(registerDto.Username.Replace(" ", "_")) != null)
             {
                 error = "The username is already taken";
             } 
             else
             {
-                await _userRepository.Register(registerDto.Username, registerDto.Email, registerDto.Pwd,
+                await _userRepository.Register(registerDto.Username.Replace(" ", "_"), registerDto.Email, registerDto.Pwd,
                     registerDto.Pwd);
             }
 
