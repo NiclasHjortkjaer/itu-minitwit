@@ -4,15 +4,15 @@ networks:
 
 services:
   web:
-    container_name: itu-minitwit
-    image: ${DOCKER_REGISTRY-}itu-minitwit
+    container_name: minitwit
+    image: minitwit
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Minitwit/Dockerfile
     ports:
-      - 5108:5108
+      - 8765:7112
     environment:
-      - ASPNETCORE_URLS=http://+:5108/
+      - ASPNETCORE_URLS=http://+:7112/
     networks:
       - outside
     

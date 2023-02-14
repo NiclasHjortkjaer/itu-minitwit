@@ -1,0 +1,73 @@
+@page "/{username?}"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MiniTwit.Repositories
+@model MiniTwit.Pages.UserTimeline
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IMessageRepository MessageRepository
+@inject IUserRepository UserRepository
+
+@{
+    Layout = "Shared/_Layout";
+    var currentUser = await UserRepository.GetCurrent();
+    var user = await UserRepository.Exists(Model.Username); 
+    ViewData["Title"] = $"{(user != null ? user.Username : "404")} | MiniTwit";
+    var messages = await MessageRepository.GetByUser(Model.Username);
+}
+
+<div>
+    @if (user == null)
+    {
+        <h2>404 User not found.</h2>
+    }
+    else
+    {
+        <div>
+
+            <h2> @user.Username's Timeline </h2>
+            @if (currentUser != null)
+            {
+                @if (currentUser == user)
+                {
+                    <span>This is you!</span>
+                }
+                else if (await UserRepository.IsFollowing(Model.Username))
+                {
+                    <div>
+                        You are currently following this user.
+                        <form method="post" class="inline">
+                            <button type="submit" class="link-button">
+                                <strong>Unfollow user</strong>
+                            </button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        You are not yet following this user.
+                        <form method="post" class="inline">
+                            <button type="submit" class="link-button">
+                                <strong>Follow user</strong>
+                            </button>
+                        </form>
+                    </div>
+                }
+            }
+            <ul class="messages">
+                @foreach (var m in messages)
+                {
+                    <li>
+                        <img style="width: 48px; height: 48px;" src="https://api.dicebear.com/5.x/identicon/svg?seed=@m.Author.Username">
+                        <strong><a href="/@m.Author.Username">@m.Author.Username</a></strong>
+                        @m.Text
+                        <small>&mdash; @m.PublishDate</small>
+                    </li>
+                }
+                @if (!messages.Any())
+                {
+                    <li><em>There's no message so far.</em></li>
+                }
+            </ul>
+        </div>
+    }
+</div>
