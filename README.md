@@ -12,3 +12,11 @@ The program will run on:
 ```
 http://localhost:8765
 ```
+
+## Deploy to DigitalOcean with vagrant
+
+```
+% export SSH_KEY_NAME=<Name of ssh key on DO>
+% export DIGITAL_OCEAN_TOKEN=<DO API access token>
+% vagrant up
+```
