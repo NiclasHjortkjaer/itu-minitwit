@@ -18,5 +18,6 @@ http://localhost:8765
 ```
 % export SSH_KEY_NAME=<Name of ssh key on DO>
 % export DIGITAL_OCEAN_TOKEN=<DO API access token>
+% export POSTGRES_PASSWORD=<Password for database>
 % vagrant up
 ```
