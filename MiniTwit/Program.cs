@@ -49,6 +49,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 using (var scope = app.Services.CreateScope())
 using (var context = scope.ServiceProvider.GetService<MiniTwitContext>())
 {
