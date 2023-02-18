@@ -9,42 +9,43 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
   config.ssh.private_key_path = '~/.ssh/id_rsa'
   config.vm.synced_folder ".", "/vagrant", type: "rsync"
-
-  config.vm.define "minitwitdb", primary: true do |server|
-    server.vm.provider :digital_ocean do |provider|
-      provider.ssh_key_name = ENV["SSH_KEY_NAME"]
-      provider.token = ENV["DIGITAL_OCEAN_TOKEN"]
-      provider.image = 'ubuntu-18-04-x64'
-      provider.region = 'fra1'
-      provider.size = 's-1vcpu-1gb'
-      provider.privatenetworking = true
-    end
-
-    server.vm.hostname = "minitwitdb"
-
-    server.trigger.after :up do |trigger|
-      trigger.info =  "Writing dbserver's IP to file..."
-      trigger.ruby do |env,machine|
-        remote_ip = machine.instance_variable_get(:@communicator).instance_variable_get(:@connection_ssh_info)[:host]
-        File.write($ip_file, remote_ip)
+  
+  if !File.file?($ip_file)
+    config.vm.define "minitwitdb", primary: true do |server|
+      server.vm.provider :digital_ocean do |provider|
+        provider.ssh_key_name = ENV["SSH_KEY_NAME"]
+        provider.token = ENV["DIGITAL_OCEAN_TOKEN"]
+        provider.image = 'ubuntu-18-04-x64'
+        provider.region = 'fra1'
+        provider.size = 's-1vcpu-1gb'
+        provider.privatenetworking = true
       end
+  
+      server.vm.hostname = "minitwitdb"
+  
+      server.trigger.after :up do |trigger|
+        trigger.info =  "Writing dbserver's IP to file..."
+        trigger.ruby do |env,machine|
+          remote_ip = machine.instance_variable_get(:@communicator).instance_variable_get(:@connection_ssh_info)[:host]
+          File.write($ip_file, remote_ip)
+        end
+      end
+  
+      server.vm.provision "shell", inline: <<-SHELL
+      echo "================================================================="
+      echo "=                       INSTALLING DOCKER                       ="
+      echo "================================================================="
+      snap install docker
+      sudo apt-get update
+  
+      echo "================================================================="
+      echo "=                DOWNLOADING AND RUNNING IMAGE                  ="
+      echo "================================================================="
+      docker run --name minitwitdb -e POSTGRES_PASSWORD=#{ENV["POSTGRES_PASSWORD"]} -p 5432:5432 -d postgres
+  
+      SHELL
     end
-
-    server.vm.provision "shell", inline: <<-SHELL
-    echo "================================================================="
-    echo "=                       INSTALLING DOCKER                       ="
-    echo "================================================================="
-    snap install docker
-    sudo apt-get update
-
-    echo "================================================================="
-    echo "=                DOWNLOADING AND RUNNING IMAGE                  ="
-    echo "================================================================="
-    docker run --name minitwitdb -e POSTGRES_PASSWORD=#{ENV["POSTGRES_PASSWORD"]} -p 5432:5432 -d postgres
-
-    SHELL
   end
-
   config.vm.define "minitwitserver#{$version}", primary: false do |server|
 
     server.vm.provider :digital_ocean do |provider|
@@ -60,9 +61,6 @@ Vagrant.configure("2") do |config|
 
     server.trigger.before :up do |trigger|
       trigger.info =  "Waiting to create server until minitwitdb's IP is available."
-      if ENV.has_value?("DB_IP")
-        File.write($ip_file, ENV["DB_IP"])
-      end
       trigger.ruby do |env,machine|
         ip_file = "db_ip.txt"
         while !File.file?($ip_file) do
@@ -101,7 +99,12 @@ Vagrant.configure("2") do |config|
       echo "================================================================="
       echo "=                       RUNNING IMAGE                           ="
       echo "================================================================="
-      docker run -p 80:7112 -e ASPNETCORE_URLS=http://+:7112/ -e DB_HOST=$DB_IP -e DB_PORT=5432 -e DB_PASSWORD=#{ENV["POSTGRES_PASSWORD"]} --name mini minitwit &
+      docker run -p 80:7112 \
+        -e ASPNETCORE_URLS=http://+:7112/ \
+        -e DB_HOST=$DB_IP \
+        -e DB_PORT=5432 \
+        -e DB_PASSWORD=#{ENV["POSTGRES_PASSWORD"]} \
+        --name mini minitwit &
 
       echo "================================================================="
       echo "=                            DONE                               ="
