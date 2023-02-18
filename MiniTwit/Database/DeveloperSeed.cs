@@ -6,9 +6,9 @@ public static class DeveloperSeed
     {
         if (minitwitContext.Users.Count() == 0)
         {
-            var user1 = new User() { Username = "jason", Email = "jason@derulo.com", PwHash = "asdjl", Follows = new HashSet<User>(), Followers = new HashSet<User>()};
-            var user2 = new User() { Username = "mark", Email = "mark@mail.com", PwHash = "HASHAHASHAS", Follows = new HashSet<User>(), Followers = new HashSet<User>()};
-            var user3 = new User() { Username = "Birgitte", Email = "Birgitte@gmail.com", PwHash = "hahahashshshsh", Follows = new HashSet<User>(),Followers = new HashSet<User>()};
+            var user1 = new User() { Username = "jason", Email = "jason@derulo.com", PwHash = "asdjl", Follows = new HashSet<User>(), Followers = new HashSet<User>(), Salt = "salt"};
+            var user2 = new User() { Username = "mark", Email = "mark@mail.com", PwHash = "HASHAHASHAS", Follows = new HashSet<User>(), Followers = new HashSet<User>(), Salt = "SALTTTT"};
+            var user3 = new User() { Username = "Birgitte", Email = "Birgitte@gmail.com", PwHash = "hahahashshshsh", Follows = new HashSet<User>(),Followers = new HashSet<User>(), Salt = "ABCDEFG"};
             
             minitwitContext.Users.Add(user1);
             minitwitContext.Users.Add(user2);
