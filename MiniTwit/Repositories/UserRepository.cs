@@ -115,6 +115,14 @@ public class UserRepository : IUserRepository
         return await _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
     }
 
+    public async Task<IEnumerable<User?>?> GetFollows(string username)
+    {
+        var user = await _miniTwitContext.Users
+            .Include(u => u.Follows)
+            .FirstOrDefaultAsync(u => string.Equals(u.Username.ToLower(), username.ToLower()));
+
+        return user == null ? null : user.Follows;
+    }
 
     public static string HashPassword(string password, string salt)
     {

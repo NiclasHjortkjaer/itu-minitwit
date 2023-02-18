@@ -11,4 +11,5 @@ public interface IUserRepository
     public Task<bool> IsFollowing(string username);
     public Task ToggleFollowing(string username);
     public Task<User?> Exists(string username);
+    public Task<IEnumerable<User?>?> GetFollows(string username);
 }
