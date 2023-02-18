@@ -65,5 +65,54 @@ namespace MiniTwit.Controllers
                     }
                 );
         }
+        
+        // GET: Simulator/msgs/user
+        [HttpGet("msgs/{user}")]
+        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user)
+        {
+            return (await _messageRepository.GetByUser(user))
+                .Take(100)
+                .Select(m => new MsgDTO()
+                    {
+                        Text = m.Text,
+                        Pub_date = m.PublishDate.ToString(), //TODO: right format
+                        Username = m.Author.Username
+                    }
+                );
+        }
+        
+        // POST: Simulator/msgs/user
+        [HttpPost("msgs/{user}")]
+        public async Task<ActionResult> PostMsgs([FromBody] string msg)
+        {
+            await _messageRepository.Create(msg);
+            return StatusCode(204);
+        }
+        
+        // GET: Simulator/fllws/user
+        [HttpGet("fllws/{username}")]
+        public async Task<FllwsDTO> GetFllws([FromRoute] string username)
+        {
+            var fllwsUsers = await _userRepository.GetFollows(username);
+
+            IEnumerable<string> fllws = new List<string>();
+            if (fllwsUsers != null)
+            {
+                fllws = fllwsUsers.Take(100).Select(m => m.Username);
+            }
+            
+            return new FllwsDTO()
+            {
+                Follows = fllws,
+            };
+        }
+        
+        // POST: Simulator/fllws/user
+        [HttpPost("fllws/{username}")]
+        public async Task<ActionResult> PostFllws([FromRoute] string username)
+        {
+            await _userRepository.ToggleFollowing(username);
+            return StatusCode(204);
+        }
     }
 }
