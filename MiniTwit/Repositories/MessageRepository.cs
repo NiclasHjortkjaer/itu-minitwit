@@ -14,38 +14,46 @@ public class MessageRepository : IMessageRepository
         _userRepository = userRepository;
     }
     
-    //TODO: LIMIT!
-    public async Task<IEnumerable<Message>> Get()
+    public async Task<IEnumerable<Message>> Get(int? limit = null)
     {
-        return await _miniTwitContext.Messages
+        var query = _miniTwitContext.Messages
             .Include(m => m.Author)
-            .OrderByDescending(m => m.PublishDate)
-            // .Take(30)
-            .ToListAsync();
+            .OrderByDescending(m => m.PublishDate);
+        if (limit.HasValue)
+        {
+            query = query.Take(limit.Value) as IOrderedQueryable<Message>;
+        }
+        return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<Message>> GetByUser(string username)
+    public async Task<IEnumerable<Message>> GetByUser(string username, int? limit = null)
     {
-        return await _miniTwitContext.Messages
+        var query = _miniTwitContext.Messages
             .Include(m => m.Author)
             .Where(m => m.Author.Username.ToLower() == username.ToLower())
-            .OrderByDescending(m => m.PublishDate)
-            // .Take(30)
-            .ToListAsync();
+            .OrderByDescending(m => m.PublishDate);
+        if (limit.HasValue)
+        {
+            query = query.Take(limit.Value) as IOrderedQueryable<Message>;
+        }
+        return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<Message>> GetFromFollows()
+    public async Task<IEnumerable<Message>> GetFromFollows(int? limit = null)
     {
         var user = await _userRepository.GetCurrent();
         var follows = (await _miniTwitContext.Users
             .Include(u => u.Follows)
             .FirstOrDefaultAsync(u => u.Id == user.Id))!.Follows;
-        
-        return await _miniTwitContext.Messages
+
+        var query = _miniTwitContext.Messages
             .Where(m => m.Author == user || follows.Contains(m.Author))
-            .OrderByDescending(m => m.PublishDate)
-            // .Take(30)
-            .ToListAsync();
+            .OrderByDescending(m => m.PublishDate);
+        if (limit.HasValue)
+        {
+            query = query.Take(limit.Value) as IOrderedQueryable<Message>;
+        }
+        return await query.ToListAsync();
     }
 
     public async Task Create(string text)
