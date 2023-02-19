@@ -31,13 +31,13 @@ namespace MiniTwit.Controllers
             } else if (registerDto.Pwd == null)
             {
                 error = "You have to enter a password";
-            } else if (await _userRepository.Exists(registerDto.Username.Replace(" ", "_")) != null)
+            } else if (await _userRepository.Exists(registerDto.Username) != null)
             {
                 error = "The username is already taken";
             } 
             else
             {
-                await _userRepository.Register(registerDto.Username.Replace(" ", "_"), registerDto.Email, registerDto.Pwd,
+                await _userRepository.Register(registerDto.Username, registerDto.Email, registerDto.Pwd,
                     registerDto.Pwd);
             }
 
