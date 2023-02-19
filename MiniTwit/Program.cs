@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
+using MiniTwit.Hubs;
 using MiniTwit.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -76,5 +78,6 @@ app.UseSession();
 app.UseStaticFiles();
 app.MapRazorPages();
 app.MapControllers();
+app.MapHub<TwitHub>("/twithub");
 
 app.Run();

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
+using MiniTwit.Hubs;
 
 namespace MiniTwit.Repositories;
 
@@ -7,11 +9,13 @@ public class MessageRepository : IMessageRepository
 {
     private readonly MiniTwitContext _miniTwitContext;
     private readonly IUserRepository _userRepository;
+    private readonly IHubContext<TwitHub> _twitHubContext;
 
-    public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository)
+    public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository, IHubContext<TwitHub> twitHubContext)
     {
         _miniTwitContext = miniTwitContext;
         _userRepository = userRepository;
+        _twitHubContext = twitHubContext;
     }
     
     public async Task<IEnumerable<Message>> Get(int? limit = null)
@@ -63,5 +67,12 @@ public class MessageRepository : IMessageRepository
 
         _miniTwitContext.Add(message);
         await _miniTwitContext.SaveChangesAsync();
+        
+        await _twitHubContext.Clients.Groups("public", user.Username).SendAsync("ReceiveMessage", new
+        {
+            Text = message.Text,
+            Username = message.Author.Username,
+            PublishDate = message.PublishDate.ToString()
+        });
     }
 }

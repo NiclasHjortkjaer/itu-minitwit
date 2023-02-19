@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 using MiniTwit.DTOs;
+using MiniTwit.Hubs;
 using MiniTwit.Repositories;
 
 namespace MiniTwit.Controllers
@@ -14,14 +16,16 @@ namespace MiniTwit.Controllers
         private readonly IUserRepository _userRepository;
         private readonly MiniTwitContext _miniTwitContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private static string ApiToken = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+        private readonly IHubContext<TwitHub> _twitHubContext;
+        private static string ApiToken = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh"; //Should be in environment variable or something
 
-        public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
+        public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor, IHubContext<TwitHub> twitHubContext)
         {
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             _miniTwitContext = miniTwitContext;
             _httpContextAccessor = httpContextAccessor;
+            _twitHubContext = twitHubContext;
         }
         
         // POST: Simulator/register
@@ -95,14 +99,22 @@ namespace MiniTwit.Controllers
             
             var author = await _userRepository.Exists(username);
             if (author == null) return StatusCode(404);
-            _miniTwitContext.Messages.Add(new Message()
+            var message = new Message()
             {
                 Author = author,
                 Text = tweet.Content,
                 PublishDate = DateTime.Now,
                 Flagged = 0
-            });
+            };
+            _miniTwitContext.Messages.Add(message);
             await _miniTwitContext.SaveChangesAsync();
+            
+            await _twitHubContext.Clients.Groups("public", message.Author.Username).SendAsync("ReceiveMessage", new
+            {
+                Text = message.Text,
+                Username = message.Author.Username,
+                PublishDate = message.PublishDate.ToString()
+            });
             
             return StatusCode(204);
         }
