@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
         if (await _miniTwitContext.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower())) throw new ArgumentException("Username is already taken.");
         if (await _miniTwitContext.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower())) throw new ArgumentException("Email is already taken.");
 
-        var salt = Guid.NewGuid().ToString();
+        var salt = Guid.NewGuid().ToString("N").Replace("\u0000", "");
         var user = new User() { 
             PwHash = HashPassword(password, salt), 
             Salt = salt,
@@ -127,6 +127,6 @@ public class UserRepository : IUserRepository
     public static string HashPassword(string password, string salt)
     {
         var hashed = SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(password + salt));
-        return System.Text.Encoding.Default.GetString(hashed);
+        return System.Text.Encoding.Default.GetString(hashed).Replace("\u0000", "");
     }
 }

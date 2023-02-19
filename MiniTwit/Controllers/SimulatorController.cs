@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MiniTwit.Database;
 using MiniTwit.DTOs;
 using MiniTwit.Repositories;
 
@@ -10,11 +12,16 @@ namespace MiniTwit.Controllers
     {
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
+        private readonly MiniTwitContext _miniTwitContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private static string ApiToken = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
 
-        public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository)
+        public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
         {
             _messageRepository = messageRepository;
             _userRepository = userRepository;
+            _miniTwitContext = miniTwitContext;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         // POST: Simulator/register
@@ -55,8 +62,7 @@ namespace MiniTwit.Controllers
         [HttpGet("msgs")]
         public async Task<IEnumerable<MsgDTO>> Msgs()
         {
-            return (await _messageRepository.Get())
-                .Take(100)
+            return (await _messageRepository.Get(100))
                 .Select(m => new MsgDTO()
                     {
                         Text = m.Text,
@@ -70,8 +76,7 @@ namespace MiniTwit.Controllers
         [HttpGet("msgs/{user}")]
         public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user)
         {
-            return (await _messageRepository.GetByUser(user))
-                .Take(100)
+            return (await _messageRepository.GetByUser(user, 100))
                 .Select(m => new MsgDTO()
                     {
                         Text = m.Text,
@@ -82,10 +87,23 @@ namespace MiniTwit.Controllers
         }
         
         // POST: Simulator/msgs/user
-        [HttpPost("msgs/{user}")]
-        public async Task<ActionResult> PostMsgs([FromBody] string msg)
+        [HttpPost("msgs/{username}")]
+        public async Task<ActionResult> PostMsgs([FromRoute] string username, [FromBody] TweetDTO tweet)
         {
-            await _messageRepository.Create(msg);
+            if (_httpContextAccessor.HttpContext.Request.Headers["Authorization"] !=
+                $"Basic {ApiToken}") return StatusCode(403, new { status = 403, error_msg = "You are not authorized to use this resource!"});
+            
+            var author = await _userRepository.Exists(username);
+            if (author == null) return StatusCode(404);
+            _miniTwitContext.Messages.Add(new Message()
+            {
+                Author = author,
+                Text = tweet.Content,
+                PublishDate = DateTime.Now,
+                Flagged = 0
+            });
+            await _miniTwitContext.SaveChangesAsync();
+            
             return StatusCode(204);
         }
         
@@ -109,9 +127,27 @@ namespace MiniTwit.Controllers
         
         // POST: Simulator/fllws/user
         [HttpPost("fllws/{username}")]
-        public async Task<ActionResult> PostFllws([FromRoute] string username)
+        public async Task<ActionResult> PostFllws([FromRoute] string username, [FromBody] FollowDTO follow)
         {
-            await _userRepository.ToggleFollowing(username);
+            if (_httpContextAccessor.HttpContext.Request.Headers["Authorization"] !=
+                $"Basic {ApiToken}") return StatusCode(403, new { status = 403, error_msg = "You are not authorized to use this resource!"});
+
+            var user = await _miniTwitContext.Users
+                .Include(u => u.Follows)
+                .FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null) return StatusCode(404);
+            if (follow.Follow != null)
+            {
+                var toFollow = await _userRepository.Exists(follow.Follow);
+                user.Follows.Add(toFollow);
+                await _miniTwitContext.SaveChangesAsync();
+            }
+            else
+            {
+                var toUnFollow = await _userRepository.Exists(follow.Unfollow!);
+                user.Follows.Remove(toUnFollow);
+                await _miniTwitContext.SaveChangesAsync();
+            }
             return StatusCode(204);
         }
     }
