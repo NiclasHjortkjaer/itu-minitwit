@@ -22,7 +22,7 @@ public class UserRepository : IUserRepository
     public async Task<User> Register(string username, string email, string password, string passwordRepeat)
     {
         if (password != passwordRepeat) throw new ArgumentException("Same password must be entered twice.");
-        if (!Regex.IsMatch(username, @"^[a-zA-Z0-9 _]+$") || username.ToLower() is "public" or "login" or "register" or "logout") throw new ArgumentException("Forbidden username.");
+        if (!Regex.IsMatch(username, @"^[a-zA-Z0-9 _]+$") || username.Trim().ToLower() is "public" or "login" or "register" or "logout") throw new ArgumentException("Forbidden username.");
         if (await _miniTwitContext.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower())) throw new ArgumentException("Username is already taken.");
         if (await _miniTwitContext.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower())) throw new ArgumentException("Email is already taken.");
 
