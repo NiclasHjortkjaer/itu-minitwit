@@ -1,10 +1,18 @@
 version: "3.9"
-networks:
-  outside:
 
 services:
+  postgresdb:
+    image: postgres:latest
+    container_name: minitwitdb
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 2345:5432
+    networks:
+      - outside
+  
   web:
-    container_name: minitwit
+    container_name: minitwitserver
     image: minitwit
     build:
       context: .
@@ -13,6 +21,13 @@ services:
       - 8765:7112
     environment:
       - ASPNETCORE_URLS=http://+:7112/
+      - DB_HOST=172.17.0.1
+      - DB_PASSWORD=postgres
+      - DB_PORT=2345
     networks:
       - outside
-    
+    depends_on:
+      - postgresdb
+  
+networks:
+  outside:
