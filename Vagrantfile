@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
         -e DB_HOST=$DB_IP \
         -e DB_PORT=5432 \
         -e DB_PASSWORD=#{ENV["POSTGRES_PASSWORD"]} \
-        --name mini minitwit &
+        --name mini -d minitwit
 
       echo "================================================================="
       echo "=                            DONE                               ="
