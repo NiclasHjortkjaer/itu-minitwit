@@ -15,6 +15,7 @@ namespace MiniTwit.Controllers
         private readonly MiniTwitContext _miniTwitContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private static string ApiToken = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+        private static int _latest = 0;
 
         public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
         {
@@ -26,8 +27,10 @@ namespace MiniTwit.Controllers
         
         // POST: Simulator/register
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] RegisterDTO registerDto)
+        public async Task<ActionResult> Register([FromBody] RegisterDTO registerDto, [FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             string error = null;
             if (registerDto.Username == null)
             {
@@ -60,8 +63,10 @@ namespace MiniTwit.Controllers
 
         // GET: Simulator/msgs
         [HttpGet("msgs")]
-        public async Task<IEnumerable<MsgDTO>> Msgs()
+        public async Task<IEnumerable<MsgDTO>> Msgs([FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             return (await _messageRepository.Get(100))
                 .Select(m => new MsgDTO()
                     {
@@ -74,8 +79,10 @@ namespace MiniTwit.Controllers
         
         // GET: Simulator/msgs/user
         [HttpGet("msgs/{user}")]
-        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user)
+        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user, [FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             return (await _messageRepository.GetByUser(user, 100))
                 .Select(m => new MsgDTO()
                     {
@@ -88,8 +95,10 @@ namespace MiniTwit.Controllers
         
         // POST: Simulator/msgs/user
         [HttpPost("msgs/{username}")]
-        public async Task<ActionResult> PostMsgs([FromRoute] string username, [FromBody] TweetDTO tweet)
+        public async Task<ActionResult> PostMsgs([FromRoute] string username, [FromBody] TweetDTO tweet, [FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             if (_httpContextAccessor.HttpContext.Request.Headers["Authorization"] !=
                 $"Basic {ApiToken}") return StatusCode(403, new { status = 403, error_msg = "You are not authorized to use this resource!"});
             
@@ -109,8 +118,10 @@ namespace MiniTwit.Controllers
         
         // GET: Simulator/fllws/user
         [HttpGet("fllws/{username}")]
-        public async Task<FllwsDTO> GetFllws([FromRoute] string username)
+        public async Task<FllwsDTO> GetFllws([FromRoute] string username, [FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             var fllwsUsers = await _userRepository.GetFollows(username);
 
             IEnumerable<string> fllws = new List<string>();
@@ -127,8 +138,10 @@ namespace MiniTwit.Controllers
         
         // POST: Simulator/fllws/user
         [HttpPost("fllws/{username}")]
-        public async Task<ActionResult> PostFllws([FromRoute] string username, [FromBody] FollowDTO follow)
+        public async Task<ActionResult> PostFllws([FromRoute] string username, [FromBody] FollowDTO follow, [FromQuery] int? latest)
         {
+            UpdateLatest(latest);
+
             if (_httpContextAccessor.HttpContext.Request.Headers["Authorization"] !=
                 $"Basic {ApiToken}") return StatusCode(403, new { status = 403, error_msg = "You are not authorized to use this resource!"});
 
@@ -149,6 +162,20 @@ namespace MiniTwit.Controllers
                 await _miniTwitContext.SaveChangesAsync();
             }
             return StatusCode(204);
+        }
+
+        [HttpGet("latest")]
+        public async Task<LatestDTO> GetLatest()
+        {
+            return new LatestDTO { latest = _latest };
+        }
+
+        private void UpdateLatest(int? latest)
+        {
+            if (latest != null)
+            {
+                _latest = latest.Value;
+            }
         }
     }
 }
