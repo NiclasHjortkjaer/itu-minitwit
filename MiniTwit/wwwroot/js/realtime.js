@@ -3,8 +3,6 @@
 var realtimeConnection = new signalR.HubConnectionBuilder().withUrl("/twithub").build();
 
 realtimeConnection.on("ReceiveMessage", function (message) {
-    console.log(message, message.text)
-
     const node = document.createElement("li");
     const img = document.createElement("img");
     img.style = "width: 48px; height: 48px;"
