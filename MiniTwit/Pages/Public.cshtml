@@ -11,7 +11,7 @@
 
 <div>
     <h2> Public Timeline </h2>
-    <ul class="messages">
+    <ul id="messagelist" class="messages">
         @foreach (var m in messages)
         {
             <li>
@@ -29,3 +29,7 @@
         }
     </ul>
 </div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/realtime.js"></script>
+<script src="~/js/realtime_public.js"></script>

@@ -53,7 +53,7 @@
                     </div>
                 }
             }
-            <ul class="messages">
+            <ul id="messagelist" class="messages">
                 @foreach (var m in messages)
                 {
                     <li>
@@ -71,3 +71,7 @@
         </div>
     }
 </div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/realtime.js"></script>
+<script src="~/js/realtime_usertimeline.js"></script>
