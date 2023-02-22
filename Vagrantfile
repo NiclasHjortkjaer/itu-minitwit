@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
       docker run --rm hello-world
       docker rmi hello-world
       echo -e "\nOpening port for minitwit ...\n"
-      ufw allow 5000 && \
+      ufw allow 80 && \
       ufw allow 22/tcp
       echo ". $HOME/.bashrc" >> $HOME/.bash_profile
       echo -e "\nConfiguring credentials as environment variables...\n"
@@ -105,8 +105,7 @@ Vagrant.configure("2") do |config|
       chmod +x /minitwit/deploy.sh
       
       echo -e "\nVagrant setup done ..."
-      echo -e "minitwit will later be accessible at http://$(hostname -I | awk '{print $1}'):5000"
-      echo -e "The mysql database needs a minute to initialize, if the landing page is stack-trace ..."
+      echo -e "minitwit will be accessible at http://$(hostname -I | awk '{print $1}'):80"
     SHELL
   end
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
