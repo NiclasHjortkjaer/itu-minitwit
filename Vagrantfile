@@ -7,8 +7,10 @@ $version = (Time.now.to_i - 1675234602) / 300
 Vagrant.configure("2") do |config|
   config.vm.box = 'digital_ocean'
   config.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-  config.ssh.private_key_path = '~/.ssh/id_rsa'
-  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  config.ssh.private_key_path = '~/.ssh/do_ssh_key'
+  
+  config.vm.synced_folder "remote_files", "/minitwit", type: "rsync"
+  config.vm.synced_folder '.', '/vagrant'
   
   if !File.file?($ip_file)
     config.vm.define "minitwitdb", primary: true do |server|
@@ -75,6 +77,8 @@ Vagrant.configure("2") do |config|
     server.vm.provision "shell", inline: 'echo "export DOCKER_USERNAME=' + "'" + ENV["DOCKER_USERNAME"] + "'" + '" >> ~/.bash_profile'
     server.vm.provision "shell", inline: 'echo "export DOCKER_PASSWORD=' + "'" + ENV["DOCKER_PASSWORD"] + "'" + '" >> ~/.bash_profile'
     server.vm.provision "shell", inline: 'echo "export DB_PASSWORD=' + "'" + ENV["DB_PASSWORD"] + "'" + '" >> ~/.bash_profile'
+    server.vm.provision "shell", inline: 'echo "export DB_HOST=' + "'" + ENV["DB_HOST"] + "'" + '" >> ~/.bash_profile'
+    server.vm.provision "shell", inline: 'echo "export DB_PORT=' + "'" + ENV["DB_PORT"] + "'" + '" >> ~/.bash_profile'
 
     server.vm.provision "shell", inline: <<-SHELL
       export DB_IP=`cat /vagrant/db_ip.txt`
