@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: minitwitserver
+    image: ${DOCKER_USERNAME}/itu-minitwit-jason
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:7112
+    environment:
+      - ASPNETCORE_URLS=http://+:7112/
+      - DB_HOST=${DB_HOST}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
