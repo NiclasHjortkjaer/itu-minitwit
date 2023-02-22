@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.ssh.private_key_path = '~/.ssh/do_ssh_key'
   
   config.vm.synced_folder "remote_files", "/minitwit", type: "rsync"
-  config.vm.synced_folder '.', '/vagrant'
+  config.vm.synced_folder '.', '/vagrant', type: "rsync"
   
   if !File.file?($ip_file)
     config.vm.define "minitwitdb", primary: true do |server|
