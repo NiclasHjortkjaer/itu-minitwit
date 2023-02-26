@@ -50,7 +50,7 @@ jobs:
         run: >
           ssh $SSH_USER@$SSH_HOST
           -i ~/.ssh/minitwit.key -o StrictHostKeyChecking=no
-          '/remote_files/deploy.sh'
+          '/minitwit/deploy.sh'
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
