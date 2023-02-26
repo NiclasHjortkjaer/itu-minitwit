@@ -12,30 +12,34 @@ on:
 
 jobs:
   test:
-    - name: Checkout
-      uses: actions/checkout@v1
+    needs: test
+    runs-on: ubuntu-latest
 
-    - name: Start test containers
-      run: docker-compose -f "docker-compose.yml" up -d --build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.7
+      - name: Start test containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
 
-    - name: Install python test dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        pip install -r python_tests/requirements.txt
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
 
-    - name: Run python tests
-      run: |
-        pytest python_tests/
+      - name: Install python test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          pip install -r python_tests/requirements.txt
 
-    - name: Stop test containers
-      if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      - name: Run python tests
+        run: |
+          pytest python_tests/
+
+      - name: Stop test containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
     
   deploy:
     needs: test
