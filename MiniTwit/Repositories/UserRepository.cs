@@ -21,7 +21,7 @@ public class UserRepository : IUserRepository
     
     public async Task<User> Register(string username, string email, string password, string passwordRepeat)
     {
-        if (password != passwordRepeat) throw new ArgumentException("Same password must be entered twice.");
+        if (password != passwordRepeat) throw new ArgumentException("The two passwords do not match");
         if (username.Trim() != username) throw new ArgumentException("Username cannot begin or end with space");
         if (!Regex.IsMatch(username, @"^[a-zA-Z0-9 _]+$") || username.ToLower() is "public" or "login" or "register" or "logout" or "twithub" or "mytimeline") throw new ArgumentException("Forbidden username.");
         if (await _miniTwitContext.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower())) throw new ArgumentException("Username is already taken.");
@@ -45,8 +45,8 @@ public class UserRepository : IUserRepository
     public async Task<User> Login(string username, string password)
     {
         var user = await _miniTwitContext.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
-        if (user == null) throw new ArgumentException("No user with the given username.");
-        if (HashPassword(password, user.Salt) != user.PwHash) throw new ArgumentException("Password is wrong.");
+        if (user == null) throw new ArgumentException("Invalid username.");
+        if (HashPassword(password, user.Salt) != user.PwHash) throw new ArgumentException("Invalid password.");
 
         var claims = new List<Claim>
         {
@@ -100,12 +100,12 @@ public class UserRepository : IUserRepository
         if (user.Followers.Contains(currentUser))
         {
             user.Followers.Remove(currentUser);
-            _httpContextAccessor.HttpContext.Session.SetString("flashes", $"You stopped following {username}.");
+            _httpContextAccessor.HttpContext.Session.SetString("flashes", $"You are no longer following {username}.");
         }
         else
         {
             user.Followers.Add(currentUser);
-            _httpContextAccessor.HttpContext.Session.SetString("flashes", $"You started following {username}.");
+            _httpContextAccessor.HttpContext.Session.SetString("flashes", $"You are now following {username}.");
         }
 
         await _miniTwitContext.SaveChangesAsync();

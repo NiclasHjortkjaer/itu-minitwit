@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 using MiniTwit.Hubs;
@@ -21,7 +22,11 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
+{
+    if ((Environment.GetEnvironmentVariable("IGNORE_ANTIFORGERY_TOKEN") ?? "False") == "True")
+        options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+});
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
