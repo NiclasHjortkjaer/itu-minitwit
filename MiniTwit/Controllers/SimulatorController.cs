@@ -67,32 +67,32 @@ namespace MiniTwit.Controllers
 
         // GET: Simulator/msgs
         [HttpGet("msgs")]
-        public async Task<IEnumerable<MsgDTO>> Msgs([FromQuery] int? latest)
+        public async Task<IEnumerable<MsgDTO>> Msgs([FromQuery] int? latest, [FromQuery] int no = 100)
         {
             UpdateLatest(latest);
 
-            return (await _messageRepository.Get(100))
+            return (await _messageRepository.Get(no))
                 .Select(m => new MsgDTO()
                     {
-                        Text = m.Text,
+                        Content = m.Text,
                         Pub_date = m.PublishDate.ToString(), //TODO: right format
-                        Username = m.Author.Username
+                        User = m.Author.Username
                     }
                 );
         }
         
         // GET: Simulator/msgs/user
         [HttpGet("msgs/{user}")]
-        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user, [FromQuery] int? latest)
+        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user, [FromQuery] int? latest, [FromQuery] int no = 100)
         {
             UpdateLatest(latest);
 
-            return (await _messageRepository.GetByUser(user, 100))
+            return (await _messageRepository.GetByUser(user, no))
                 .Select(m => new MsgDTO()
                     {
-                        Text = m.Text,
+                        Content = m.Text,
                         Pub_date = m.PublishDate.ToString(), //TODO: right format
-                        Username = m.Author.Username
+                        User = m.Author.Username
                     }
                 );
         }
@@ -130,7 +130,7 @@ namespace MiniTwit.Controllers
         
         // GET: Simulator/fllws/user
         [HttpGet("fllws/{username}")]
-        public async Task<FllwsDTO> GetFllws([FromRoute] string username, [FromQuery] int? latest)
+        public async Task<FllwsDTO> GetFllws([FromRoute] string username, [FromQuery] int? latest, [FromQuery] int no = 100)
         {
             UpdateLatest(latest);
 
@@ -139,7 +139,7 @@ namespace MiniTwit.Controllers
             IEnumerable<string> fllws = new List<string>();
             if (fllwsUsers != null)
             {
-                fllws = fllwsUsers.Take(100).Select(m => m.Username);
+                fllws = fllwsUsers.Take(no).Select(m => m.Username);
             }
             
             return new FllwsDTO()
