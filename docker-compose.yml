@@ -10,13 +10,15 @@ services:
       - 2345:5432
     networks:
       - outside
+    healthcheck:
+      test: "exit 0"
   
   web:
     container_name: minitwitserver
     image: minitwit
     build:
       context: .
-      dockerfile: Minitwit/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 8765:7112
     environment:
@@ -24,10 +26,12 @@ services:
       - DB_HOST=172.17.0.1
       - DB_PASSWORD=postgres
       - DB_PORT=2345
+      - IGNORE_ANTIFORGERY_TOKEN=True
     networks:
       - outside
     depends_on:
-      - postgresdb
+      postgresdb:
+        condition: service_healthy
   
 networks:
   outside:

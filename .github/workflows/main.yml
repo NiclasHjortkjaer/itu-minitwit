@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: CI/CD
 
 on:
   push:
@@ -11,7 +11,34 @@ on:
     manual: true
 
 jobs:
-  build:
+  test:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Start test containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.7
+
+    - name: Install python test dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r python_tests/requirements.txt
+
+    - name: Run python tests
+      run: |
+        pytest python_tests/
+
+    - name: Stop test containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
+    
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +51,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker Build
         uses: docker/setup-buildx-action@v1
 
       - name: Build and push minitwitimage
