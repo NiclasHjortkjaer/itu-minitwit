@@ -83,18 +83,20 @@ namespace MiniTwit.Controllers
         
         // GET: Simulator/msgs/user
         [HttpGet("msgs/{user}")]
-        public async Task<IEnumerable<MsgDTO>> GetMsgs([FromRoute] string user, [FromQuery] int? latest, [FromQuery] int no = 100)
+        public async Task<IActionResult> GetMsgs([FromRoute] string user, [FromQuery] int? latest, [FromQuery] int no = 100)
         {
             UpdateLatest(latest);
 
-            return (await _messageRepository.GetByUser(user, no))
+            if (await _userRepository.Exists(user) == null) return StatusCode(404);
+
+            return Ok((await _messageRepository.GetByUser(user, no))
                 .Select(m => new MsgDTO()
                     {
                         Content = m.Text,
                         Pub_date = m.PublishDate.ToString(), //TODO: right format
                         User = m.Author.Username
                     }
-                );
+                ));
         }
         
         // POST: Simulator/msgs/user
@@ -130,22 +132,18 @@ namespace MiniTwit.Controllers
         
         // GET: Simulator/fllws/user
         [HttpGet("fllws/{username}")]
-        public async Task<FllwsDTO> GetFllws([FromRoute] string username, [FromQuery] int? latest, [FromQuery] int no = 100)
+        public async Task<IActionResult> GetFllws([FromRoute] string username, [FromQuery] int? latest, [FromQuery] int no = 100)
         {
             UpdateLatest(latest);
 
             var fllwsUsers = await _userRepository.GetFollows(username);
 
-            IEnumerable<string> fllws = new List<string>();
-            if (fllwsUsers != null)
+            if (fllwsUsers == null) return StatusCode(404);
+
+            return Ok(new FllwsDTO()
             {
-                fllws = fllwsUsers.Take(no).Select(m => m.Username);
-            }
-            
-            return new FllwsDTO()
-            {
-                Follows = fllws,
-            };
+                Follows = fllwsUsers.Take(no).Select(m => m.Username),
+            });
         }
         
         // POST: Simulator/fllws/user
@@ -164,12 +162,14 @@ namespace MiniTwit.Controllers
             if (follow.Follow != null)
             {
                 var toFollow = await _userRepository.Exists(follow.Follow);
+                if (toFollow == null) return StatusCode(404);
                 user.Follows.Add(toFollow);
                 await _miniTwitContext.SaveChangesAsync();
             }
             else
             {
                 var toUnFollow = await _userRepository.Exists(follow.Unfollow!);
+                if (toUnFollow == null) return StatusCode(404);
                 user.Follows.Remove(toUnFollow);
                 await _miniTwitContext.SaveChangesAsync();
             }
