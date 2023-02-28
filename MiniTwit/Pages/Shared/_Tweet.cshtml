@@ -1,0 +1,10 @@
+@model MiniTwit.Database.Message
+
+<li>
+    <img style="width: 48px; height: 48px;" src="https://api.dicebear.com/5.x/identicon/svg?seed=@Model.Author.Username">
+    <strong>
+        <a href="/@Model.Author.Username">@Model.Author.Username</a>
+    </strong>
+    @Model.Text
+    <small>&mdash; @Model.PublishDate</small>
+</li>

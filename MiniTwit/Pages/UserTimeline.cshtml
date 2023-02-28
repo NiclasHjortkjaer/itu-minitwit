@@ -56,12 +56,7 @@
             <ul id="messagelist" class="messages">
                 @foreach (var m in messages)
                 {
-                    <li>
-                        <img style="width: 48px; height: 48px;" src="https://api.dicebear.com/5.x/identicon/svg?seed=@m.Author.Username">
-                        <strong><a href="/@m.Author.Username">@m.Author.Username</a></strong>
-                        @m.Text
-                        <small>&mdash; @m.PublishDate</small>
-                    </li>
+                    @await Html.PartialAsync("_Tweet", m)
                 }
                 @if (!messages.Any())
                 {
