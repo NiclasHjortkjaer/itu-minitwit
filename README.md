@@ -4,7 +4,7 @@
 
 ## Run with docker-compose
 
-To run the program in Docker use the following command:
+To run the program with Docker use the following command:
 
 ```
 % docker-compose up
