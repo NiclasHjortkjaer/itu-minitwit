@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.0.1) (2023-3-1)
+
+### Bug Fixes
+
+* only release when deployed ([9ebc316](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/9ebc31698e95e2c1e2b5b12519566d3c48951bb6))
+* only release when deployed ([4f2bc66](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/4f2bc665d87a54d2ab8d4883b200a3f3c84021dc))
+
 <a name="1.0.0"></a>
 ## [1.0.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.0.0) (2023-3-1)
 
