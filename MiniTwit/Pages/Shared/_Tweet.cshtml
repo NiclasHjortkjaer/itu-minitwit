@@ -6,5 +6,5 @@
         <a href="/@Model.Author.Username">@Model.Author.Username</a>
     </strong>
     @Model.Text
-    <small>&mdash; @Model.PublishDate</small>
+    <small>&mdash; <span class="publish-date">@Model.PublishDate.Value.AddHours(1)</span></small>
 </li>
