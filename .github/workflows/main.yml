@@ -86,6 +86,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
   release:
+    needs: release
     runs-on: ubuntu-latest
 
     steps:
