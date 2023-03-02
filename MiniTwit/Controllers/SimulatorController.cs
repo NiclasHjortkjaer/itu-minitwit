@@ -124,7 +124,7 @@ namespace MiniTwit.Controllers
             {
                 Text = message.Text,
                 Username = message.Author.Username,
-                PublishDate = message.PublishDate.ToString()
+                PublishDate = message.PublishDate.Value.AddHours(1).ToString()
             });
             
             return StatusCode(204);

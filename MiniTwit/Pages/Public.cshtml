@@ -30,7 +30,7 @@
         }
     </ul>
     <div style="margin: auto; width: 50%; text-align: center;">
-        Showing @messages.Count() messages <br/>
+        Showing @messages.Count()@(page == 1 ? "(+)" : "") messages <br/>
         <a href="/public?page=@(Math.Max(page - 1, 1))">prev. page</a>
         —
         <a href="/public?page=@(page + 1)">next page</a>

@@ -72,7 +72,7 @@ public class MessageRepository : IMessageRepository
         {
             Text = message.Text,
             Username = message.Author.Username,
-            PublishDate = message.PublishDate.ToString()
+            PublishDate = message.PublishDate.Value.AddHours(1).ToString()
         });
     }
 }
