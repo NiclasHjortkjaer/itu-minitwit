@@ -18,14 +18,14 @@ public class MessageRepository : IMessageRepository
         _twitHubContext = twitHubContext;
     }
     
-    public async Task<IEnumerable<Message>> Get(int? limit = null)
+    public async Task<IEnumerable<Message>> Get(int? limit = null, int page = 1)
     {
         var query = _miniTwitContext.Messages
             .Include(m => m.Author)
             .OrderByDescending(m => m.PublishDate);
         if (limit.HasValue)
         {
-            query = query.Take(limit.Value) as IOrderedQueryable<Message>;
+            query = query.Skip((page - 1) * limit.Value).Take(limit.Value) as IOrderedQueryable<Message>;
         }
         return await query.ToListAsync();
     }

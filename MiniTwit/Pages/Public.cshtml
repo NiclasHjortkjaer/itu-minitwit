@@ -6,11 +6,19 @@
 @{
     ViewData["Title"] = "Welcome | MiniTwit";
     Layout = "Shared/_Layout";
-    var messages = await MessageRepository.Get();
+    var hasPage = int.TryParse(Request.Query["page"], out var page);
+    page = Math.Max(hasPage ? page : 1, 1);
+    var messages = await MessageRepository.Get(50, page);
 }
 
 <div>
     <h2> Public Timeline </h2>
+    <div style="margin: auto; width: 50%; text-align: center;">
+        <a href="/public?page=@(Math.Max(page - 1, 1))">prev. page</a>
+        —
+        <a href="/public?page=@(page + 1)">next page</a>
+        <br/> Page @(page)
+    </div>
     <ul id="messagelist" class="messages">
         @foreach (var m in messages)
         {
@@ -21,6 +29,12 @@
             <li><em>There's no message so far.</em></li>
         }
     </ul>
+    <div style="margin: auto; width: 50%; text-align: center;">
+        Showing @messages.Count() messages <br/>
+        <a href="/public?page=@(Math.Max(page - 1, 1))">prev. page</a>
+        —
+        <a href="/public?page=@(page + 1)">next page</a>
+    </div>
 </div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
