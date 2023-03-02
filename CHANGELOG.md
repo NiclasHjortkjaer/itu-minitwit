@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.1) (2023-3-2)
+
+### Bug Fixes
+
+* realtime messages (ghettofix) ([4edfa7e](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/4edfa7ef54fef8da8f1a4f75ad3fe99cb465eb5b))
+
+### Other
+
+* Merge remote-tracking branch 'origin/main' ([8433d59](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/8433d59c13b745086c23ef3237e280fa76c67697))
+
 <a name="1.1.0"></a>
 ## [1.1.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.0) (2023-3-2)
 
