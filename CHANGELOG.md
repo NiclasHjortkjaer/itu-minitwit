@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.0"></a>
+## [1.1.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.0) (2023-3-2)
+
+### Features
+
+* 90s ghetto pagination ([92e38ab](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/92e38ab152460a1fc9e3d23d2f5f8005b45c11d9))
+
+### Other
+
+* Merge remote-tracking branch 'origin/main' ([28aa358](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/28aa358afef5b10b53bb2e7ad11b976b94409161))
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.0.1) (2023-3-1)
 
