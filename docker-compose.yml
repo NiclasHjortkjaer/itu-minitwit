@@ -47,6 +47,10 @@ services:
     image: grafana/grafana:4.5.2
     ports:
       - "3000:3000"  
+    volumes:
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - outside  
   
