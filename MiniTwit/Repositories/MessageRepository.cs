@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 using MiniTwit.Hubs;
+using Prometheus;
 
 namespace MiniTwit.Repositories;
 
@@ -10,6 +11,8 @@ public class MessageRepository : IMessageRepository
     private readonly MiniTwitContext _miniTwitContext;
     private readonly IUserRepository _userRepository;
     private readonly IHubContext<TwitHub> _twitHubContext;
+    private static readonly Histogram GetPublicDuration = Metrics
+        .CreateHistogram("minitwit_get_duration_seconds", "Histogram of get call processing durations.");
 
     public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository, IHubContext<TwitHub> twitHubContext)
     {
@@ -20,9 +23,12 @@ public class MessageRepository : IMessageRepository
     
     public async Task<IEnumerable<Message>> Get(int? limit = null, int page = 1)
     {
+        using (GetPublicDuration.NewTimer());
+        
         var query = _miniTwitContext.Messages
             .Include(m => m.Author)
             .OrderByDescending(m => m.PublishDate);
+
         if (limit.HasValue)
         {
             query = query.Skip((page - 1) * limit.Value).Take(limit.Value) as IOrderedQueryable<Message>;
