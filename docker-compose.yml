@@ -43,7 +43,6 @@ services:
     networks:
       - outside
 
-
   grafana:
     image: grafana/grafana:4.5.2
     ports:
