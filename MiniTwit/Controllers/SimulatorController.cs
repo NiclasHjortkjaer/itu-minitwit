@@ -5,6 +5,7 @@ using MiniTwit.Database;
 using MiniTwit.DTOs;
 using MiniTwit.Hubs;
 using MiniTwit.Repositories;
+using Prometheus;
 
 namespace MiniTwit.Controllers
 {
@@ -19,6 +20,8 @@ namespace MiniTwit.Controllers
         private readonly IHubContext<TwitHub> _twitHubContext;
         private static string ApiToken = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh"; //Should be in environment variable or something
         private static int _latest = 0;
+        private static readonly Counter CreateMessageCount = Metrics
+            .CreateCounter("minitwit_messages_created_total", "Number of created messages.");
 
         public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor, IHubContext<TwitHub> twitHubContext)
         {
@@ -127,6 +130,8 @@ namespace MiniTwit.Controllers
                 PublishDate = message.PublishDate.Value.AddHours(1).ToString()
             });
             
+            CreateMessageCount.Inc();
+
             return StatusCode(204);
         }
         
