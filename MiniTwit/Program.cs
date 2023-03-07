@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 using MiniTwit.Hubs;
 using MiniTwit.Repositories;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,12 +76,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseHttpMetrics();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
 
 app.UseStaticFiles();
+
+app.MapMetrics();
 app.MapRazorPages();
 app.MapControllers();
 app.MapHub<TwitHub>("/twithub");
