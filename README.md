@@ -12,7 +12,7 @@ To run the program with Docker use the following command:
 
 MiniTwit will run on: <a href="http://localhost:8765">`http://localhost:8765`</a>
 
-## Deploy to DigitalOcean with vagrant
+## Deploy to DigitalOcean with Vagrant
 To use an already existing remote postgres database instance create a file called "db_ip.txt" containing its IP in the root directory. <br>
 You must have set a repository up on docker hub called "itu-minitwit-jason" <br>
 You must have generated a ssh key called ~/.ssh/do_ssh_key which is your ssh key on Digital Ocean
