@@ -12,7 +12,9 @@ public class MessageRepository : IMessageRepository
     private readonly IUserRepository _userRepository;
     private readonly IHubContext<TwitHub> _twitHubContext;
     private static readonly Histogram GetPublicDuration = Metrics
-        .CreateHistogram("minitwit_get_duration_seconds", "Histogram of get call processing durations.");
+        .CreateHistogram("minitwit_get_timeline_duration_seconds", "Histogram of get call processing durations.");
+    private static readonly Counter CreateMessageCount = Metrics
+        .CreateCounter("minitwit_messages_created_total", "Number of created messages.");
 
     public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository, IHubContext<TwitHub> twitHubContext)
     {
@@ -80,5 +82,7 @@ public class MessageRepository : IMessageRepository
             Username = message.Author.Username,
             PublishDate = message.PublishDate.Value.AddHours(1).ToString()
         });
+        
+        CreateMessageCount.Inc();
     }
 }
