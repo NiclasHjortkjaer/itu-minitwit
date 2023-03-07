@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.2) (2023-3-7)
+
+### Bug Fixes
+
+* remote files docker-compose.yml ([0253105](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/0253105d155fbf226f391d027973ac613c3e8a19))
+
+### Other
+
+* Update prometheus.yml ([8dad875](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/8dad875b6553d982f98b9bc0eafc0aab64cc3fb6))
+* add prometheus ([f6ecddc](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/f6ecddcc016cbb82930a2ee4400dd4c0e2bc3077))
+* add prometheus online ([fcb2358](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fcb23583b813fd6424f84255e09585bfd6a40ac0))
+* minitwit_get_duration_seconds_sum ([3ecace2](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/3ecace2ee70b0848d4ddd3b73001f2d04b9eb70e))
+* minitwit_messages_created_total ([fa4ce75](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fa4ce753218c6cb8e841831c15ffe64cee8e3eb0))
+* setup husky ([ae6b64d](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/ae6b64da2dbe1acb654f0119413f6ca25b0b42c3))
+* update readme ([3ab3524](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/3ab35246bc947b9673d20848aff845dd1a077841))
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.1) (2023-3-2)
 
