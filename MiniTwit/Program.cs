@@ -30,6 +30,7 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<MetricWorker>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
