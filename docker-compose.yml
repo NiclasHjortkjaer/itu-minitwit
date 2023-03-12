@@ -44,7 +44,7 @@ services:
       - outside
 
   grafana:
-    image: grafana/grafana:4.5.2
+    image: grafana/grafana:8.2.6
     ports:
       - "3000:3000"  
     volumes:
@@ -52,7 +52,9 @@ services:
       - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/main.yaml
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     networks:
-      - outside  
+      - outside 
+    depends_on:
+      - prometheus
   
 networks:
   outside:
