@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.3"></a>
+## [1.1.3](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.3) (2023-3-12)
+
+### Bug Fixes
+
+* update grafana version ([a74543c](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/a74543c1a8997df0c111f63e712e093b4db75438))
+
+### Other
+
+* add metricworker for scheduled metric queries ([6aa5105](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/6aa51057e5cf29e3ccd419678d47f83507fe1a65))
+* Merge branch 'main' of https://github.com/NiclasHjortkjaer/itu-minitwit ([9fd99fe](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/9fd99fe09c228c5378ab10ca422a6c33e76d7454))
+* Merge branch 'main' of https://github.com/NiclasHjortkjaer/itu-minitwit ([d5fd5c1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d5fd5c1fb94fe7df6ba5c67127967f4d405aedb4))
+* add prometheus for create message ([884d4f1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/884d4f160615a4c02d2bd776e74ff64f8eefd3da))
+* Grafana Save Datasource ([fe8d3b5](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fe8d3b5335855b28c286e162ffe75e66604d90ed))
+* Save dashboard ([cd5517e](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/cd5517edafd7e92a28ba1d756aa53b8022c2ff9d))
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.2) (2023-3-7)
 
