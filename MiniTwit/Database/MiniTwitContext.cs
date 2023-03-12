@@ -10,10 +10,11 @@ public class MiniTwitContext : DbContext
 
     public MiniTwitContext()
     {
+        var user = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
         var host = Environment.GetEnvironmentVariable("DB_HOST");
         var port = Environment.GetEnvironmentVariable("DB_PORT");
         var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
-        ConnectionString = $"Host={host};Port={port};Database=minitwitdb;Username=postgres;Password={password}";
+        ConnectionString = $"Host={host};Port={port};Database=minitwitdb;Username={user};Password={password}";
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseNpgsql(ConnectionString);
