@@ -20,6 +20,8 @@ You must have generated a ssh key called ~/.ssh/do_ssh_key which is your ssh key
 % export SSH_KEY_NAME=<Name of ssh key on DO>
 % export DIGITAL_OCEAN_TOKEN=<DO API access token>
 % export POSTGRES_PASSWORD=<Password for database>
+% export DB_PORT=<Port for database>
+% export DB_USER=<Username for database>
 % export DOCKER_USERNAME=<Username on docker hub>
 % export DOCKER_PASSWORD=<Access token for docker hub>
 % vagrant up
