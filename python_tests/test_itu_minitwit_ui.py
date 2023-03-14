@@ -77,7 +77,7 @@ def test_register_user_via_gui():
     """
     firefox_options = Options()
     firefox_options.add_argument("--headless")
-    firefox_options = None
+    # firefox_options = None
 
     with webdriver.Firefox(service=Service("./geckodriver"), options=firefox_options) as driver:
         generated_msg = _register_user_via_gui(driver, ["Me", "me@some.where", "secure123", "secure123"])[0].text
@@ -95,7 +95,7 @@ def test_register_user_via_gui_and_check_db_entry():
     """
     firefox_options = Options()
     firefox_options.add_argument("--headless")
-    firefox_options = None
+    # firefox_options = None
     with webdriver.Firefox(service=Service("./geckodriver"), options=firefox_options) as driver:
 
         assert _get_user_by_name('Me') == None
