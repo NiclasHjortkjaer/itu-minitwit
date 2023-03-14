@@ -22,7 +22,10 @@ namespace MiniTwit.Controllers
         private static int _latest = 0;
         private static readonly Counter CreateMessageCount = Metrics
             .CreateCounter("minitwit_messages_created_total", "Number of created messages.");
+        private static readonly Summary RequestSizeSummary = Metrics
+            .CreateSummary("minitwit_messages_created_time", "Summary of messages created over the last 10 minutes.");
 
+        
         public SimulatorController(IMessageRepository messageRepository, IUserRepository userRepository, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor, IHubContext<TwitHub> twitHubContext)
         {
             _messageRepository = messageRepository;
@@ -131,6 +134,7 @@ namespace MiniTwit.Controllers
             });
             
             CreateMessageCount.Inc();
+            RequestSizeSummary.Observe(1);
 
             return StatusCode(204);
         }
