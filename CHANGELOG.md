@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.4) (2023-3-14)
+
+### Bug Fixes
+
+* added html lang attribute ([d9118d6](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d9118d63336688a66dd59da09a1999310868a587))
+
+### Other
+
+* add dbuser to env ([da2a5d5](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/da2a5d548ce969c36b8e7facf0d535badfe71dc5))
+* Merge remote-tracking branch 'origin/main' ([bca191d](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/bca191da1a0b23f23969e8da066d57ce91046b1d))
+* add sonarcloud ([4c3140d](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/4c3140d77acd704030b41ad5238f92ea5bf44182))
+* add summary of messages created ([40f0b99](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/40f0b991ea03e206dec67141db59537dbfcf650a))
+* disable automatic analysis ([b4ecaa8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/b4ecaa8b7d82953d0385429cd9b219515b33716b))
+* remove --no-restore ([78e0970](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/78e0970edd39bbb114afd4b0fb2f1fba4728f97b))
+* update messages created for the last 30 minutes ([8e0ef78](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/8e0ef78f89257238ef53b438f73a35578588613d))
+* update tokens ([10cca5d](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/10cca5d6db5d42b3192c07f0b0601be8eb9a4332))
+* update vagrantfile ([0b82b39](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/0b82b399ab58a6457ce084ccf7fdf087f9593ff9))
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.3) (2023-3-12)
 
