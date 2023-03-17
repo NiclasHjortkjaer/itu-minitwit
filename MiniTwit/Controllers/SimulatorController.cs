@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 using MiniTwit.DTOs;
-using MiniTwit.Hubs;
+using MiniTwit.Other_Services;
 using MiniTwit.Repositories;
 using Prometheus;
 

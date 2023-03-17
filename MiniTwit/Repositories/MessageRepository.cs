@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
-using MiniTwit.Hubs;
+using MiniTwit.Other_Services;
 using Prometheus;
 
 namespace MiniTwit.Repositories;

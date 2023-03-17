@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
-using MiniTwit.Hubs;
+using MiniTwit.Other_Services;
 using MiniTwit.Repositories;
 using Prometheus;
 
@@ -30,6 +30,8 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+
+
 builder.Services.AddHostedService<MetricWorker>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

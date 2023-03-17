@@ -1,13 +1,7 @@
 "use strict";
-const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-});
-const page = params.page;
-
 var realtimeConnection = new signalR.HubConnectionBuilder().withUrl("/twithub").build();
 
 realtimeConnection.on("ReceiveMessage", function (message) {
-    if (page > 1) return;
     const node = document.createElement("li");
     const img = document.createElement("img");
     img.style = "width: 48px; height: 48px;"

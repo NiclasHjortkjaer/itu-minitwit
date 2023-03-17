@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MiniTwit.Database;
 
-namespace MiniTwit.Hubs;
+namespace MiniTwit.Other_Services;
 
 public class TwitHub : Hub
 {
