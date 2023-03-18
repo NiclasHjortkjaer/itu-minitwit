@@ -23,8 +23,7 @@ jobs:
         
       - name: Scan containers for vulnerabilities with Snyk
         run: |
-          sudo apt install docker-scan-plugin
-          docker scan --severity=high --accept-license minitwit
+          docker scan --accept-license minitwit
 
       - name: Set up Python 3.7
         uses: actions/setup-python@v4
