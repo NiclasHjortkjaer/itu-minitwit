@@ -22,7 +22,9 @@ jobs:
         run: docker-compose -f "docker-compose.yml" up -d --build
         
       - name: Scan containers for vulnerabilities with Snyk
-        run: docker scan --severity=high --accept-license minitwit
+        run: |
+          sudo apt install docker-scan-plugin
+          docker scan --severity=high --accept-license minitwit
 
       - name: Set up Python 3.7
         uses: actions/setup-python@v4
