@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.5"></a>
+## [1.1.5](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.5) (2023-3-19)
+
+### Bug Fixes
+
+* version bumb + add code cracker ([a9896f7](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/a9896f70519bc01b0e04224fc60f9d53871106fc))
+
+### Other
+
+* Merge remote-tracking branch 'origin/main' ([d866926](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d8669262c138243c500662df55c9741ef1044ee6))
+* remove snyk because no work ([c4a76df](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/c4a76df19dc9280d0a05f0b135e1931b932248f4))
+* small fixes ([f2f6541](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/f2f654173aa4ea95d64dadd5d62552457b440a45))
+* Update main.yml ([36b7673](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/36b7673c04a1a6d94badb3cc59521b773ac5855c))
+* Update main.yml ([2f19ffe](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/2f19ffe905de4b6c803bca47e311e18bceba500e))
+* add more ui tests ([1bc0ff7](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/1bc0ff7c8737b5906a8331815cd4f8e1d1389cd7))
+* add snyk scan ([924fe2a](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/924fe2a10d5a8a176e152888d3477a1423b01f67))
+* add user tests ([65a597a](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/65a597add8af4d62d1904dfc753c2c57cca30040))
+* update firefox test ([d89f58b](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d89f58b5f21e045a03ff96eeb4d32f2ef50750ae))
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.4) (2023-3-14)
 
