@@ -42,7 +42,7 @@ public class UserRepository : IUserRepository
         _miniTwitContext.Users.Add(user);
         await _miniTwitContext.SaveChangesAsync();
 
-        _logger.LogInformation("Registered user: {username} at {time}", username, DateTime.UtcNow.ToLongTimeString());
+        _logger.LogInformation("login user id: {userid} at {time}", user.Id, DateTime.UtcNow.ToLongTimeString());
         return user;
     }
 

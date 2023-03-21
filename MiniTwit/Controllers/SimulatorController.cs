@@ -5,7 +5,6 @@ using MiniTwit.Database;
 using MiniTwit.DTOs;
 using MiniTwit.Other_Services;
 using MiniTwit.Repositories;
-using Prometheus;
 
 namespace MiniTwit.Controllers
 {
