@@ -5,8 +5,17 @@ using MiniTwit.Database;
 using MiniTwit.Other_Services;
 using MiniTwit.Repositories;
 using Prometheus;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Add logger
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    if (builder.Environment.IsDevelopment()) lc.WriteTo.Console();
+    else lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200")));
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<MiniTwitContext>();
@@ -80,6 +89,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseHttpMetrics();
+app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();

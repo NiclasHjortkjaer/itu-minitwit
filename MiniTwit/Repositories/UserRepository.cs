@@ -12,9 +12,11 @@ public class UserRepository : IUserRepository
 {
     private readonly MiniTwitContext _miniTwitContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ILogger<IUserRepository> _logger;
 
-    public UserRepository(MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
+    public UserRepository(ILogger<IUserRepository> logger, MiniTwitContext miniTwitContext, IHttpContextAccessor httpContextAccessor)
     {
+        _logger = logger;
         _miniTwitContext = miniTwitContext;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -60,6 +62,7 @@ public class UserRepository : IUserRepository
             CookieAuthenticationDefaults.AuthenticationScheme, 
             new ClaimsPrincipal(claimsIdentity));
 
+        _logger.LogInformation(501, "User, id: {userid}, logged in at {time}", user.Id, DateTime.UtcNow.ToLongTimeString());
         return user;
     }
 
