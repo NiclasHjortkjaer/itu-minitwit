@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -95,7 +94,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseHttpMetrics();
-app.UseSerilogRequestLogging();
+// app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
