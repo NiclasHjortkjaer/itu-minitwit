@@ -212,6 +212,7 @@ namespace MiniTwit.Controllers
         [HttpGet("latest")]
         public async Task<LatestDTO> GetLatest()
         {
+            _logger.LogInformation("GET: Simulator/latest - Get latest was successfully, logged at {time}", DateTime.UtcNow.ToLongTimeString());
             return new LatestDTO { latest = _latest };
         }
 
@@ -219,6 +220,7 @@ namespace MiniTwit.Controllers
         {
             if (latest != null)
             {
+                _logger.LogInformation("UpdatingLatest - Update of latest value was successfully, logged at {time}", DateTime.UtcNow.ToLongTimeString());
                 _latest = latest.Value;
             }
         }
