@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((ctx, lc) =>
 {
     if (builder.Environment.IsDevelopment()) lc.WriteTo.Console();
-    else lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200")));
+    else lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://172.17.0.1:9200"))
+    {
+        AutoRegisterTemplate = true,
+        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
+        IndexFormat = "minitwit"
+    });
 });
 
 // Add services to the container.
