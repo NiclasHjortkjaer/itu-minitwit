@@ -11,11 +11,11 @@ public class MessageRepository : IMessageRepository
     private readonly MiniTwitContext _miniTwitContext;
     private readonly IUserRepository _userRepository;
     private readonly IHubContext<TwitHub> _twitHubContext;
-    private readonly ILogger<MessageRepository> _logger;
+    private readonly ILogger<IMessageRepository> _logger;
     private static readonly Histogram GetPublicDuration = Metrics
         .CreateHistogram("minitwit_get_timeline_duration_seconds", "Histogram of get call processing durations.");
 
-    public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository, IHubContext<TwitHub> twitHubContext, Logger<MessageRepository> logger)
+    public MessageRepository(MiniTwitContext miniTwitContext, IUserRepository userRepository, IHubContext<TwitHub> twitHubContext, ILogger<IMessageRepository> logger)
     {
         _miniTwitContext = miniTwitContext;
         _userRepository = userRepository;
