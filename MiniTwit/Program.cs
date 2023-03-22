@@ -6,6 +6,7 @@ using MiniTwit.Other_Services;
 using MiniTwit.Repositories;
 using Prometheus;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 //Add logger
 builder.Host.UseSerilog((ctx, lc) =>
 {
-    if (builder.Environment.IsDevelopment()) lc.WriteTo.Console();
-    else lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri($"http://{Environment.GetEnvironmentVariable("ELASTICSEARCH_HOST")}:9200"))
+    if (builder.Environment.IsDevelopment()) lc.MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+        .WriteTo.Console();
+    else lc.MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri($"http://{Environment.GetEnvironmentVariable("ELASTICSEARCH_HOST")}:9200"))
     {
         AutoRegisterTemplate = true,
         AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
@@ -94,7 +101,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseHttpMetrics();
-// app.UseSerilogRequestLogging();
+app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
