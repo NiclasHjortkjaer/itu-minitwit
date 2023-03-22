@@ -1,8 +1,5 @@
 version: "3.3"
 
-volumes:
-  elk_elasticsearch_data:
-
 services:
   web:
     container_name: minitwitserver
@@ -18,6 +15,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
     networks:
       - outside
 
@@ -38,27 +36,5 @@ services:
     networks:
       - outside  
       
-  elasticsearch:
-    image: "docker.elastic.co/elasticsearch/elasticsearch:7.17.1"
-    ports:
-      - "9200:9200"
-    environment:
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-      - "discovery.type=single-node"
-    volumes:
-      - elk_elasticsearch_data:/usr/share/elasticsearch/data
-    networks:
-      - outside
-
-  kibana:
-    image: "docker.elastic.co/kibana/kibana:7.17.1"
-    ports:
-      - "5601:5601"
-    environment:
-      elasticsearch.hosts: '["http://elasticsearch:9200"]'
-    networks:
-      - outside
-
-
 networks:
   outside:
