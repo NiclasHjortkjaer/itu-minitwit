@@ -1,0 +1,41 @@
+version: "3.9"
+
+volumes:
+  elk_elasticsearch_data:
+
+services:
+  postgresdb:
+    image: postgres:latest
+    container_name: minitwitdb
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 2345:5432
+    networks:
+      - outside
+    healthcheck:
+      test: "exit 0"
+  
+  web:
+    container_name: minitwitserver
+    image: minitwit
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    ports:
+      - 8765:7112
+    environment:
+      - ASPNETCORE_URLS=http://+:7112/
+      - DB_HOST=172.17.0.1
+      - DB_PASSWORD=postgres
+      - DB_PORT=2345
+      - IGNORE_ANTIFORGERY_TOKEN=True
+      - ELASTICSEARCH_HOST=172.17.0.1
+    networks:
+      - outside
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+
+networks:
+  outside:
