@@ -24,6 +24,7 @@ You must have generated a ssh key called ~/.ssh/do_ssh_key which is your ssh key
 % export DB_USER=<Username for database>
 % export DOCKER_USERNAME=<Username on docker hub>
 % export DOCKER_PASSWORD=<Access token for docker hub>
+% export ELASTICSEARCH_HOST=<Host for elasticsearch logging server>
 % vagrant up
 ```
 ## Run for development

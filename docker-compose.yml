@@ -1,5 +1,8 @@
 version: "3.9"
 
+volumes:
+  elk_elasticsearch_data:
+
 services:
   postgresdb:
     image: postgres:latest
@@ -27,6 +30,7 @@ services:
       - DB_PASSWORD=postgres
       - DB_PORT=2345
       - IGNORE_ANTIFORGERY_TOKEN=True
+      - ELASTICSEARCH_HOST=172.17.0.1
     networks:
       - outside
     depends_on:
@@ -55,6 +59,27 @@ services:
       - outside 
     depends_on:
       - prometheus
+        
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.17.1"
+    ports:
+      - "9200:9200"
+    environment:
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "discovery.type=single-node"
+    volumes:
+      - elk_elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - outside
+        
+  kibana:
+    image: "docker.elastic.co/kibana/kibana:7.17.1"
+    ports:
+      - "5601:5601"
+    environment:
+      elasticsearch.hosts: '["http://elasticsearch:9200"]'
+    networks:
+      - outside
   
 networks:
   outside:

@@ -30,7 +30,7 @@ public class Login : PageModel
         if (Username == null || Password == null) return Page();
         try
         {
-            await _userRepository.Login(Username, Password);
+            await _userRepository.Login("Bug", Password);
             _httpContextAccessor.HttpContext.Session.SetString("flashes", "You were logged in.");
             return Redirect("/");
         }
