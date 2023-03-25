@@ -12,7 +12,7 @@ services:
     ports:
       - "9200:9200"
     environment:
-      - "ES_JAVA_OPTS=-Xms700m -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
       - "discovery.type=single-node"
     volumes:
       - elk_elasticsearch_data:/usr/share/elasticsearch/data
