@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
     server.vm.provision "shell", inline: 'echo "export DB_IP=`cat /vagrant/db_ip.txt`" >> ~/.bash_profile'
     server.vm.provision "shell", inline: 'echo "export DB_HOST=' + "'" + "$DB_IP" + "'" + '" >> ~/.bash_profile'
     server.vm.provision "shell", inline: 'echo "export DB_PORT=' + "'" + ENV["DB_PORT"] + "'" + '" >> ~/.bash_profile'
-    server.vm.provision "shell", inline: 'echo "export ELASTICSEARCH_HOST=' + "'" + ENV["ELASTICSEARCH_HOST"] + "'" + '" >> ~/.bash_profile'
+    server.vm.provision "shell", inline: 'echo "export LOKI_HOST=' + "'" + ENV["LOKI_HOST"] + "'" + '" >> ~/.bash_profile'
 
     server.vm.provision "shell", inline: <<-SHELL
       echo $DB_IP

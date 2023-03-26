@@ -8,6 +8,7 @@ using Prometheus;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.Grafana.Loki;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +22,8 @@ builder.Host.UseSerilog((ctx, lc) =>
     else lc.MinimumLevel.Debug()
         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
         .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri($"http://{Environment.GetEnvironmentVariable("ELASTICSEARCH_HOST")}:9200"))
-    {
-        AutoRegisterTemplate = true,
-        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
-        IndexFormat = "minitwit"
-    });
+        .WriteTo.GrafanaLoki($"http://{Environment.GetEnvironmentVariable("LOKI_HOST")}:3100"
+            , labels: new []{new LokiLabel{Key= "app", Value= "minitwit"}});
 });
 
 // Add services to the container.

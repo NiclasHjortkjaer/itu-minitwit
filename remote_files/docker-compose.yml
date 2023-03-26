@@ -15,7 +15,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - LOKI_HOST=172.17.0.1
     networks:
       - outside
 
@@ -34,7 +34,15 @@ services:
     ports:
       - "3000:3000"  
     networks:
-      - outside  
+      - outside 
+  
+  loki:
+    image: grafana/loki:2.7.3
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - outside
       
 networks:
   outside:

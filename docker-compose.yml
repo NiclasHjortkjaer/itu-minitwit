@@ -30,7 +30,7 @@ services:
       - DB_PASSWORD=postgres
       - DB_PORT=2345
       - IGNORE_ANTIFORGERY_TOKEN=True
-      - ELASTICSEARCH_HOST=172.17.0.1
+      - LOKI_HOST=172.17.0.1
     networks:
       - outside
     depends_on:
@@ -51,35 +51,45 @@ services:
     image: grafana/grafana:8.2.6
     ports:
       - "3000:3000"  
-    volumes:
-      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
-      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/main.yaml
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
+#    volumes:
+#      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+#      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/main.yaml
+#      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
     networks:
       - outside 
     depends_on:
       - prometheus
-        
-  elasticsearch:
-    image: "docker.elastic.co/elasticsearch/elasticsearch:7.17.1"
-    ports:
-      - "9200:9200"
-    environment:
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-      - "discovery.type=single-node"
-    volumes:
-      - elk_elasticsearch_data:/usr/share/elasticsearch/data
-    networks:
-      - outside
-        
-  kibana:
-    image: "docker.elastic.co/kibana/kibana:7.17.1"
-    ports:
-      - "5601:5601"
-    environment:
-      elasticsearch.hosts: '["http://elasticsearch:9200"]'
-    networks:
-      - outside
   
+  loki:
+    image: grafana/loki:2.7.3
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - outside
+
 networks:
   outside:

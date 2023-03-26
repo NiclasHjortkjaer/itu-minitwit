@@ -30,7 +30,7 @@ services:
       - DB_PASSWORD=postgres
       - DB_PORT=2345
       - IGNORE_ANTIFORGERY_TOKEN=True
-      - ELASTICSEARCH_HOST=172.17.0.1
+      - LOKI_HOST=172.17.0.1
     networks:
       - outside
     depends_on:
