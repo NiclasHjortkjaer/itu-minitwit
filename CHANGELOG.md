@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.6"></a>
+## [1.1.6](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.6) (2023-3-26)
+
+### Bug Fixes
+
+* We using loki now ([10d0ad6](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/10d0ad6245eee94a37f329d0100dda3049fb608a))
+
+### Other
+
+* add serilog ([610d360](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/610d3606b20123019cd54268b64914bed3412c88))
+* change log message ([807f75f](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/807f75f761e712a7ed9ccade34460863ba7ca790))
+* comment out some logging ([23baf98](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/23baf985402230ccc178acb9b1d33d6c97dd85db))
+* decrease memory usage in workflow ([3899e7a](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/3899e7ab78f10f505e806749db5c9cb3dcb3c264))
+* docker compose ([495c740](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/495c740fe336a0703936d26d67ab3068fb4d5224))
+* fix login ([cf33421](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/cf33421d59d4e97274b5cd6f74eaf289ca35a8b1))
+* fix:versionbump Fix dependency injection error ([01b1467](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/01b1467ac0b0b2dbf43a89643ed9e8c91b79ee8b))
+* let's try some logging ([d08df6a](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d08df6ab026307b1d839025dea5a7b27645c3411))
+* Logs to simulator ([7915274](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/79152743536d7dc721d026f6d9ca9ffbc2224b96))
+* Made bug ([00d1483](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/00d1483576addb34e36372d631bda2de18ad46fb))
+* Merge branch 'logging' of https://github.com/NiclasHjortkjaer/itu-minitwit into logging ([fa104ad](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fa104ad0b30308176b3aa71002aaf61abe9f6c55))
+* Merge branch 'logging' of https://github.com/NiclasHjortkjaer/itu-minitwit into logging ([dfc6daf](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/dfc6daf39bc3217fc286dc72ff1ed7bbf40f8fa1))
+* Merge pull request #18 from NiclasHjortkjaer/logging ([c971be0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/c971be02d0112677c421130239dc18472fced955))
+* Merge remote-tracking branch 'origin/logging' into logging ([edb0ae4](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/edb0ae4b81905e45d6cfbfcb2061de553e82415a))
+* Merge remote-tracking branch 'origin/logging' into logging ([e9d1a02](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/e9d1a0288aa306cc6b3a921475717bb608d7c80f))
+* reduce log amounts ([7fce3fd](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/7fce3fd5ce8abc6801126ae81dac9e7ff86d19de))
+* update index format ([2d7a2fc](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/2d7a2fc044b772841bd1ca33a15d14bf513c4a8a))
+* update log server docker-composer.yml ([f905422](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/f9054223fd2dd422f7726a52ea1b81787fa1d20c))
+* add logging to userrepository ([b572289](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/b572289d1d0daec77248a3d6d9ae942bcb845e56))
+* Bug ([fa43f7a](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fa43f7a60fdd2a5eae610598c2270d96fe7efd06))
+* Logs MessageRepository ([a4170ae](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/a4170aee92db5e45ff5b9ccde929b0b94d88c055))
+* update grafana dashboard ([88aeecf](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/88aeecf69b942c354a1ef459c516c8a069149a64))
+
 <a name="1.1.5"></a>
 ## [1.1.5](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.5) (2023-3-19)
 
