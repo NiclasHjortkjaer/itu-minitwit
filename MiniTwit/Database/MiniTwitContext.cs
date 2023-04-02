@@ -24,5 +24,8 @@ public class MiniTwitContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(c => c.Follows)
             .WithMany(c => c.Followers);
+
+        modelBuilder.Entity<Message>()
+            .HasIndex(m => m.PublishDate);
     }
 }

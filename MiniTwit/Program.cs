@@ -7,7 +7,6 @@ using MiniTwit.Repositories;
 using Prometheus;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.Grafana.Loki;
 
 var builder = WebApplication.CreateBuilder(args);
