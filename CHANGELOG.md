@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.7"></a>
+## [1.1.7](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.7) (2023-4-2)
+
+### Bug Fixes
+
+* add publish date index for hopefully faster queries ([d0996e8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/d0996e8471bcbf364be5260702bc41719452bbca))
+
+### Other
+
+* chore:Add postmortem ([31cc1ea](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/31cc1ea2e10b20edea52c7762c6778c52795f42b))
+* Merge pull request #19 from NiclasHjortkjaer/logging ([3039e19](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/3039e1943762965b1e66431a1534ffa3baacfd0a))
+* Merge remote-tracking branch 'origin/main' ([e931d76](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/e931d76159027a31f8516a5ab484e9075cf7aadf))
+
 <a name="1.1.6"></a>
 ## [1.1.6](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.6) (2023-3-26)
 
