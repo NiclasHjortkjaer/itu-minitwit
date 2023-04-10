@@ -24,6 +24,6 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['172.17.0.1:80']
+      - targets: ['172.17.0.1:8765']
         labels:
           group: 'production'
