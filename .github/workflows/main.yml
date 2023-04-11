@@ -26,9 +26,14 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Install firefox
+        run: |
+          wget -O ~/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64"
+          sudo tar xjf ~/FirefoxSetup.tar.bz2 -C /opt/
+          sudo ln -s /opt/firefox/firefox /usr/lib/firefox/firefox
+
       - name: Install python test dependencies
         run: |
-          sudo apt install firefox
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install -r python_tests/requirements.txt
