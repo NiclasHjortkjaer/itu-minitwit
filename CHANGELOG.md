@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="2.0.0"></a>
+## [2.0.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v2.0.0) (2023-4-11)
+
+### Breaking Changes
+
+* Update README.md ([2a02a82](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/2a02a82c04e685aa1f40fd188006e28fd5141fce))
+
+### Other
+
+* Update README.md ([b2869e8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/b2869e86a67ff491072fd489abc2d744f836d896))
+
 <a name="1.1.8"></a>
 ## [1.1.8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.8) (2023-4-11)
 
