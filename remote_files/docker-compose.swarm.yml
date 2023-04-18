@@ -1,0 +1,74 @@
+version: "3.3"
+
+services:
+  web:
+    container_name: minitwitserver
+    image: ${DOCKER_USERNAME}/itu-minitwit-jason
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - target: 7112
+        published: 8765
+        protocol: tcp
+        mode: host
+    environment:
+      - ASPNETCORE_URLS=http://+:7112/
+      - DB_HOST=${DB_HOST}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - LOKI_HOST=loki
+    networks:
+      - outside
+    deploy:
+      mode: global
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.swarm.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    networks:
+      - outside
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    networks:
+      - outside
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+  
+  loki:
+    image: grafana/loki:2.7.3
+    ports:
+      - target: 3100
+        published: 3100
+        protocol: tcp
+        mode: ingress
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - /minitwit/data/loki/config.yaml:/etc/loki/config.yaml
+    networks:
+      - outside
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+
+networks:
+  outside:
+    driver: overlay
+
+# docker stack deploy -c docker-compose.swarm.yml ministack
