@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="2.0.0"></a>
+## [2.0.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v2.0.0) (2023-4-11)
+
+### Breaking Changes
+
+* Update README.md ([2a02a82](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/2a02a82c04e685aa1f40fd188006e28fd5141fce))
+
+### Other
+
+* Update README.md ([b2869e8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/b2869e86a67ff491072fd489abc2d744f836d896))
+
+<a name="1.1.8"></a>
+## [1.1.8](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.8) (2023-4-11)
+
+### Bug Fixes
+
+* add commandtimeout ([e003b83](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/e003b83adeb48cd1546b6a2d5a48744410f3b298))
+
+### Other
+
+* change connectionstring ([15071bf](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/15071bf76effc8192a58e82908d574195808c2f9))
+* try fix ui tests ([9f68117](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/9f68117986730592b39a4c37cccc56ec23d40a79))
+* try fix ui tests 2 ([7406ff6](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/7406ff68e461e8d66e40ba436843716384a4f899))
+* add nginx config ([db8e8f5](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/db8e8f5373f48826df5cdb18e4cf7212a6e4e10c))
+
 <a name="1.1.7"></a>
 ## [1.1.7](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v1.1.7) (2023-4-2)
 
