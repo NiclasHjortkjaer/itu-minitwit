@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="2.0.1"></a>
+## [2.0.1](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v2.0.1) (2023-4-18)
+
+### Bug Fixes
+
+* docker swarm baby ([3229953](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/3229953e3879427810ee82b23a019a4ea3fecdf5))
+
+### Other
+
+* Create Logs.json ([ef4feca](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/ef4feca60245d3a2c3f1a9176f801e1d46547ec4))
+* Create User.json ([9df9d40](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/9df9d40d9cbb6267e6008841ef4d2996e51c17d9))
+* Merge remote-tracking branch 'origin/main' ([fa37526](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/fa375264c14cdec0775b8015283e9a2e00e082ae))
+* Merge remote-tracking branch 'origin/main' ([2038d0e](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/2038d0e48a1bdbe56baffd5930dd41a2642f377c))
+* new styles ([cfd0d0e](https://www.github.com/NiclasHjortkjaer/itu-minitwit/commit/cfd0d0efaceae321f72e3fffe84682c31bc80c69))
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://www.github.com/NiclasHjortkjaer/itu-minitwit/releases/tag/v2.0.0) (2023-4-11)
 
