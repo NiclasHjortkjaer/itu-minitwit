@@ -27,13 +27,13 @@ jobs:
           theme: report/style.css
           build_html: false
           table_of_contents: true
-      - name: Add page numbers to PDF
-        run: |
-          sudo apt-get install texlive-latex-base
-          sudo apt-get install texlive-fonts-recommended
-          sudo apt-get install texlive-fonts-extra
-          sudo apt-get install texlive-latex-extra
-          pdflatex -output-directory report/build report/report_pagenumbers
+#      - name: Add page numbers to PDF
+#        run: |
+#          sudo apt-get install texlive-latex-base
+#          sudo apt-get install texlive-fonts-recommended
+#          sudo apt-get install texlive-fonts-extra
+#          sudo apt-get install texlive-latex-extra
+#          pdflatex -output-directory report/build report/report_pagenumbers
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
