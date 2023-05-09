@@ -1,0 +1,47 @@
+name: Report
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'report/**'
+  workflow_dispatch:
+
+jobs:
+  build-report:
+    name: Build PDF
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - uses: baileyjm02/markdown-to-pdf@v1
+        with:
+          input_dir: report
+          output_dir: report/build/
+          images_dir: report/images
+          image_import: ./images
+          theme: report/style.css
+          build_html: false
+          table_of_contents: true
+      - name: Add page numbers to PDF
+        run: |
+          sudo apt-get install texlive-latex-base
+          sudo apt-get install texlive-fonts-recommended
+          sudo apt-get install texlive-fonts-extra
+          sudo apt-get install texlive-latex-extra
+          pdflatex -output-directory report/build report/report_pagenumbers
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add --all
+          git commit -a -m "build report pdf"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

@@ -1,0 +1,18 @@
+\documentclass[8pt]{article}
+\usepackage[final]{pdfpages}
+\usepackage{fancyhdr}
+
+\topmargin 70pt
+\oddsidemargin 70pt
+
+\pagestyle{fancy}
+\rfoot{\Large\thepage}
+\cfoot{}
+\renewcommand {\headrulewidth}{0pt}
+\renewcommand {\footrulewidth}{0pt}
+
+\begin{document}
+\includepdfset{pagecommand=\thispagestyle{fancy}}
+\includepdf[fitpaper=true,scale=0.98,pages=-]{report.pdf}
+% fitpaper & scale aren't always necessary - depends on the paper being submitted.
+\end{document}
