@@ -1,3 +1,4 @@
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=bugs)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
