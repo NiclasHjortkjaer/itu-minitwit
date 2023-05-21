@@ -1,23 +1,29 @@
 version: "3.3"
 
 services:
+  db:
+    image: postgres:latest
+    container_name: minitwitdb
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    networks:
+      - outside
+    healthcheck:
+      test: "exit 0"
+  
   web:
     container_name: minitwitserver
     image: ${DOCKER_USERNAME}/itu-minitwit-jason
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
-      - target: 7112
-        published: 8765
-        protocol: tcp
-        mode: host
+      - 8765:7112
     environment:
       - ASPNETCORE_URLS=http://+:7112/
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=db
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER}
+      - DB_PORT=5432
+      - DB_USER=postgres
       - LOKI_HOST=loki
     networks:
       - outside
@@ -65,7 +71,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-
 
 networks:
   outside:

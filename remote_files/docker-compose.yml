@@ -2,11 +2,8 @@ version: "3.3"
 
 services:
   web:
-    container_name: minitwitserver
     image: ${DOCKER_USERNAME}/itu-minitwit-jason
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: minitwitserver
     ports:
       - 8765:7112
     environment:
@@ -18,8 +15,6 @@ services:
       - LOKI_HOST=172.17.0.1
     networks:
       - outside
-    deploy:
-      replicas: 3
 
   prometheus:
     image: prom/prometheus
@@ -44,16 +39,6 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     networks:
-      - outside
-    
-  proxy:
-    image: minitwitnginx
-    build:
-      context: ./nginx
-    ports:
-      - 80:80
-      - 443:443
-    networks: 
       - outside
 
 networks:
