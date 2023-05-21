@@ -1,3 +1,7 @@
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=bugs)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
 # itu-minitwit
 
 ### <a href="http://143.244.205.161">Live at 143.244.205.161</a>
