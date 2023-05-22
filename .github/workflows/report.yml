@@ -28,8 +28,8 @@ jobs:
         
       - name: Publish LaTex
         run: |
-          git config --global user.email "caws@itu.dk"
-          git config --global user.name "SadlifeCaw"
+          git config --global user.email "madspiriwe99@gmail.com"
+          git config --global user.name "Stalin1999"
           git add -f $PWD/report/build/*.pdf
           git commit -m "Workflow - Update report PDF"
           git push --force
