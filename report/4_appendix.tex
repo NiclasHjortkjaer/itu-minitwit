@@ -1,0 +1,103 @@
+\newpage
+\section{Appendix}
+
+\subsection{Security Assessment}\label{appendix:securityAssessment}
+A. Risk Identification
+Identify assets (e.g. web application)
+\begin{enumerate}
+    \item Webserver (deployed via DigitalOcean)
+    \item Prometheus
+    \item Managed Database
+    \item Grafana service
+    \item Loki
+\end{enumerate}
+Identify threat sources (e.g. SQL injection)
+\begin{enumerate}
+    \item Webserver (deployed via DigitalOcean)
+    \begin{enumerate}
+        \item Unsanitized input (sql injections)
+        \item DDOS 
+        \item Brute force attacks on login
+        \item SSH brute force attack on login
+    \end{enumerate}
+    \item Prometheus
+    \begin{enumerate}
+        \item Publicly exposed metrics
+    \end{enumerate}
+    \item Managed Database
+    \begin{enumerate}
+        \item No/bad authorization/authentication
+        \item Entire database could be exposed/deleted
+    \end{enumerate}
+    \item Grafana service
+    \begin{enumerate}
+        \item No/bad authorization/authentication
+        \item Public dashboards
+        \item Editable dashboards (not read-only)
+    \end{enumerate}
+    \item Loki
+    \begin{enumerate}
+        \item Can get information about username of users
+    \end{enumerate}
+\end{enumerate}
+
+Construct risk scenarios (e.g. Attacker performs SQL injection on web application to download sensitive user data)
+
+\begin{enumerate}[label=\Alph*]
+    \item Attacker performs SQL injection on web application to download sensitive user data
+    \item Attacker performs a DDOS attack to make our server unresponsive
+    \item Attacker brute forces a user’s password and gains control over their profile
+    \item Attacker brute forces SSH credentials and gets full access over the web server
+    \item Attacker reads the public Prometheus metrics, and gains business insights on our service
+    \item Attacker gets control over Prometheus and is able to misrepresent metrics. This could mask spikes or irregular patterns in our monitoring.
+    \item Attacker is able to get access to our Grafana service, and can see/delete all our monitoring
+    \item Attacker is able to get access to our managed database, and downloads/deletes all our data
+    \item Attacker gets access to metrics
+\end{enumerate}
+
+
+\noindent B. Risk Analysis
+Translated from english to danish: Vurderinger er lavet baseret på sandsynligheden for, at et angreb ville lykkedes
+Certain, likely, possible, unlikely, rare
+Insignificant, Negligible, Marginal, Critical, Catastrophic
+Determine likelihood and impact
+
+\begin{enumerate}[label=\Alph*]
+    \item Likelihood: Unlikely, Severity: Extensive
+    \item Likelihood: Likely, Severity: Extensive
+    \item Likelihood: Possible, Severity: Negligible
+    \item Likelihood: Rare, Severity: Significant
+    \item Likelihood: Possible, Severity: Insignificant (ITU IP is whitelisted)
+    \item Likelihood: Rare, Severity: Extensive
+    \item Likelihood: Rare, Severity: Moderate 
+    \item Likelihood: Rare, Severity: Significant
+    \item Likelihood: Almost Certain, Severity: Negligible		
+\end{enumerate}
+
+Use a Risk Matrix to prioritize risk of scenarios in current state of program
+Discuss what are you going to do about each of the scenarios
+
+Ud fra vores matrix kan vi se at de vigtigste scenarier at gøre noget ved er B
+
+For at fikse B kan vi:
+Load balancing
+
+
+\subsection{Logs}
+\subsubsection{Session 2}
+\begin{itemize}
+    \item We have decided to write in C\# and dotnet since that is the language most of us are comfortable with.
+    \item The folder structure of the legacy project is not that good. We therefore set up a new folder structure following the MVC pattern.
+    \item We struggled a lot and needed to make a lot of changes to make the program work. 
+\end{itemize}
+
+\subsubsection{Session 3}
+\begin{itemize}
+    \item We are not taking small steps. We took a big step in trying to implement it in a different way. Lukas has made it just using razor pages instead. This makes an exact copy of the project. This is the correct way to do it. Therefore we will build our main branch based on that.
+    \item We have made the Simulator and tested it. It should work. For the “latest” endpoint we have created a static variable that can be used. Maybe this is a bit scuffed since it can lead to race conditions if multiple people try to access the resource. But let's see.
+    \item We have changed the database to a postgres database so it should be better when a lot of users start using the program. The database also runs in another docker image now.
+    \item We have tested the simulator with the test program provided in the project work, and the program seems to run as it should.
+\end{itemize}
+
+\subsubsection{Session 5}
+Consider how much you as a group adhere to the "Three Ways" characterizing DevOps (from "The DevOps Handbook"):
