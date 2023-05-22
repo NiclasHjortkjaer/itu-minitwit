@@ -14,17 +14,17 @@
 \author{VORES NAVNE }
 \date{May 2023}
 
-\newcommand{\charactercount}[1]{
-\immediate\write18{
-    expr `texcount -1 -sum -merge #1.tex` + `texcount -1 -sum -merge -char #1.tex` - 1 
-    > chars.txt
-}\input{chars.txt}}
+%\newcommand{\charactercount}[1]{
+%\immediate\write18{
+%    expr `texcount -1 -sum -merge #1.tex` + `texcount -1 -sum -merge -char #1.tex` - 1 
+%    > chars.txt
+%}\input{chars.txt}}
 
-\newcommand{\wordcount}[1]{%
-  \immediate\write18{
-    expr `texcount -1 -sum -merge #1.tex`
-    > words.txt
-  }\input{words.txt}}
+%\newcommand{\wordcount}[1]{%
+%  \immediate\write18{
+%    expr `texcount -1 -sum -merge #1.tex`
+%    > words.txt
+%  }\input{words.txt}}
 
 \begin{document}
 
@@ -34,8 +34,8 @@
 \input{2_process_perspective}
 \input{3_lessons_learned_perspective}
 
-\textcolor{red}{This text contains \charactercount{main} - \charactercount{4_appendix} = Calculate yourself...  characters.} \\
-\textcolor{red}{This text contains \wordcount{main} - \wordcount{4_appendix} = Calculate yourself...  words.} \\
+%\textcolor{red}{This text contains \charactercount{main} - \charactercount{4_appendix} = Calculate yourself...  characters.} \\
+%\textcolor{red}{This text contains \wordcount{main} - \wordcount{4_appendix} = Calculate yourself...  words.} \\
 
 
 \input{4_appendix}
