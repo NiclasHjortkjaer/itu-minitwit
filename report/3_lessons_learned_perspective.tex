@@ -12,26 +12,26 @@
 
 %Also reflect and describe what was the "DevOps" style of your work. For example, what did you do differently to previous development projects and how did it work?
 
-\subsection{Evolution and refactoring}
-Initially, we wanted to use Blazor for developing the application. However, because of the limited time for refactoring we switched to Razor pages, as we estimated that it required a third of the code. Furthermore, the idea of choosing Razor pages instead of Blazor, was because the code base would be a lot more similar to the project we had to refactor. Blazor is notoriously known for splitting up model, view and controller, which is not the case with Razor.
+\subsection{Evolution and refactoring} \label{evoref}
+As mentioned, we initially wanted to use Blazor to develop the application. However, because of the limited time for refactoring, we switched to Razor pages, as we estimated that it required a third of the code. Furthermore, the code base would be much more similar to the project we had to refactor. Blazor is notoriously known for splitting up the model, view, and controller, which is not the case with Razor.
 
 \subsection{Operations}
-We learnt the importance of knowledge sharing. We quickly found that when we did not share what we had done to the project since last week, it was difficult for all members to have an overview of the entire system. To solve this issue we started using retrospectives as a way of knowledge sharing every Tuesday before next weeks task.
+We discovered the importance of knowledge sharing. We quickly found that when we did not share what we had done to the project since last week, it took time for all members to have an overview of the entire system. To solve this issue, we started using retrospectives as a way of sharing knowledge every Tuesday before the next week's task.
 
-\subsection{Biggest issues}
-One of the biggest issues the group faced, was the limited work time that we had. Since the project was rather extensive, and the amount of new tools that should be incorporated was large, it required a lot of time of patience from the group members. This was an issue, since we primarily only had Tuesday as the day where we met physically, and otherwise only online days. We all agreed that we work better when we are in the room together, and this was difficult to do every time. The result of this issue was that we sometimes had to work until the late evening hours on Tuesdays, but it was a price that we were willing to pay, so that we did not have to work more online than what we already did.
+\subsection{Limited work time}
+One of the most significant issues the group faced was our limited work time. Since the project was rather extensive, and the amount of new tools that should be incorporated was large, it required much time from the group members. This was an issue since we primarily only had Tuesday as the day when we met physically. We all agreed that we work better when in the room together, and this was not easy to do every time. The result of this issue was that we sometimes had to work until the late evening hours on Tuesdays and work only on essential parts of the application. Still, it was a price that we were willing to pay not to have to work more online than we already did.
 
 \subsection{Major lessons learned}
 \begin{enumerate}
-    \item We learnt a lot of new tools such as Grafana, Prometheus, Vagrant, Digital Ocean, among others. We also reinforced our learning, and learnt more about tools such as Bash, Docker, and Github.
-    \item We learnt how to use the DevOps theory in practice, on a project, which helps a lot with understanding the concepts more thoroughly.
-    \item We learnt what it felt like to work with a DevOps approach, which many companies use in real life.
-    \item We learnt and understood how one should think when working with DevOps, since this is a very different way of thinking about the project and the code, compared to not using a DevOps approach.
-    \item The value of automating your work: Being able to turn the entire application on/off with a single script. While the initial work needed to write the automation scripts was demanding, it proved a very valuable and cool feature of our project. Being able to automate the many, complicated steps in deploying a new version of the code to a live server is also a completely new experience.
-    \item The practical sides of writing code meant to be published. It is not enough for a system to run on just our own computers. Normally we just hand in the source code, but in this project we had to make sure our code was deployable in the real world.
+    \item We learned a lot of new tools such as Grafana, Prometheus, Vagrant, and Digital Ocean, among others. We also reinforced our learning and learned more about tools like Bash, Docker, and Github.
+    \item We learned how to use the DevOps theory in practice on a project, which helps a lot with understanding the concepts more thoroughly.
+    \item We learned what it felt like to work with a DevOps approach, which many companies use in real life.
+    \item We learned and understood how one should think when working with DevOps since this is a very different way of thinking about the project and the code compared to not using a DevOps approach.
+    \item We learned about the value of automating work: E.g., turning the entire application on/off with a single script.
+    \item We learned about the practical sides of writing code meant to be published. 
 \end{enumerate}
 
 \subsection{The differences with DevOps}
-Many of the previous projects we have worked with on ITU have not used a DevOps approach. This resulted in many of the things we did, technologies that we used, and the way we had to think about the project changed substantially. All of the group members were writing their bachelor thesis, while having this course, and none of us are using DevOps in that. This gives a very clear comparison between the applied work ethics in the two respective courses. 
+Many previous projects we have worked with on ITU have not used a DevOps approach. This resulted in many of the things we did, the technologies we used, and how we had to think about the project changed substantially. All group members were writing their bachelor thesis while having this course, and none related to DevOps. This gives an obvious comparison between the applied work ethics in the two respective courses.  \\
 
-Normally, we do not prioritize committing and pushing code as soon as it works in small steps. Instead, we usually only push when we have to merge the code we have written, with what the others have written. This is in sharp contrast to the DevOps approach we have had in this course, where we would always commit, push, (and, when the pipeline was set up correctly, release), when we had something that worked. The DevOps approach led to fewer merge conflicts, compared to our previous projects, and it also resulted in our code being live faster. If one has code locally on their device without it being released, it is more or less dead code, since it is not being used whatsoever.
+Usually, we do not prioritize committing and pushing code as soon as it works in small steps. Instead, we usually only push when we have to merge our code with what the others have written. This is in sharp contrast to the DevOps approach we had in this course, where we would always commit, push (and, when the pipeline was set up correctly, release) when we had something that worked. The DevOps approach led to fewer merge conflicts than in our previous projects, resulting in our code being live faster. If one has code locally on their device without it being released, it is considered dead code since it is not used.
