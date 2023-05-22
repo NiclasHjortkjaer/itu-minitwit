@@ -19,7 +19,7 @@ jobs:
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.tex
-          working-directory: report
+          working_directory: report
       - name: move pdf
         run: |
           mkdir -p build
