@@ -7,7 +7,7 @@ echo "creating manager"
 export MANAGER_ID="$(curl -X POST $DROPLETS_API\
        -d'{"name":"manager","tags":["swarm"],"region":"fra1",
        "size":"s-1vcpu-1gb","image":"docker-20-04",
-       "ssh_keys":["ed:f0:8f:a6:e3:30:fb:1b:91:30:8e:47:cb:01:a6:fa"]}'\
+       "ssh_keys":'$SSH_KEYS'}'\
        -H "$BEARER_AUTH_TOKEN" -H "$JSON_CONTENT"\
        | jq -r .droplet.id )"\
        && sleep 3 && echo "$MANAGER_ID"
@@ -16,7 +16,7 @@ echo "creating worker1"
 export WORKER1_ID="$(curl -X POST $DROPLETS_API\
        -d'{"name":"worker1","tags":["swarm"],"region":"fra1",
        "size":"s-1vcpu-1gb","image":"docker-20-04",
-       "ssh_keys":["ed:f0:8f:a6:e3:30:fb:1b:91:30:8e:47:cb:01:a6:fa"]}'\
+       "ssh_keys":'$SSH_KEYS'}'\
        -H "$BEARER_AUTH_TOKEN" -H "$JSON_CONTENT"\
        | jq -r .droplet.id )"\
        && sleep 3 && echo "$WORKER1_ID"
@@ -25,7 +25,7 @@ echo "creating worker2"
 export WORKER2_ID="$(curl -X POST $DROPLETS_API\
        -d'{"name":"worker2","tags":["swarm"],"region":"fra1",
        "size":"s-1vcpu-1gb","image":"docker-20-04",
-       "ssh_keys":["ed:f0:8f:a6:e3:30:fb:1b:91:30:8e:47:cb:01:a6:fa"]}'\
+       "ssh_keys":'$SSH_KEYS'}'\
        -H "$BEARER_AUTH_TOKEN" -H "$JSON_CONTENT"\
        | jq -r .droplet.id )"\
        && sleep 3 && echo "$WORKER2_ID"
