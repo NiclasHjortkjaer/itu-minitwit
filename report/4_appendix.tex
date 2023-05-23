@@ -81,23 +81,3 @@ Ud fra vores matrix kan vi se at de vigtigste scenarier at gøre noget ved er B
 
 For at fikse B kan vi:
 Load balancing
-
-
-\subsection{Logs}
-\subsubsection{Session 2}
-\begin{itemize}
-    \item We have decided to write in C\# and dotnet since that is the language most of us are comfortable with.
-    \item The folder structure of the legacy project is not that good. We therefore set up a new folder structure following the MVC pattern.
-    \item We struggled a lot and needed to make a lot of changes to make the program work. 
-\end{itemize}
-
-\subsubsection{Session 3}
-\begin{itemize}
-    \item We are not taking small steps. We took a big step in trying to implement it in a different way. Lukas has made it just using razor pages instead. This makes an exact copy of the project. This is the correct way to do it. Therefore we will build our main branch based on that.
-    \item We have made the Simulator and tested it. It should work. For the “latest” endpoint we have created a static variable that can be used. Maybe this is a bit scuffed since it can lead to race conditions if multiple people try to access the resource. But let's see.
-    \item We have changed the database to a postgres database so it should be better when a lot of users start using the program. The database also runs in another docker image now.
-    \item We have tested the simulator with the test program provided in the project work, and the program seems to run as it should.
-\end{itemize}
-
-\subsubsection{Session 5}
-Consider how much you as a group adhere to the "Three Ways" characterizing DevOps (from "The DevOps Handbook"):

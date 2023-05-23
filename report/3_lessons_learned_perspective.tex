@@ -13,25 +13,30 @@
 %Also reflect and describe what was the "DevOps" style of your work. For example, what did you do differently to previous development projects and how did it work?
 
 \subsection{Evolution and refactoring} \label{evoref}
-As mentioned, we initially wanted to use Blazor to develop the application. However, because of the limited time for refactoring, we switched to Razor pages, as we estimated that it required a third of the code. Furthermore, the code base would be much more similar to the project we had to refactor. Blazor is notoriously known for splitting up the model, view, and controller, which is not the case with Razor.
+Initially, we created a single-page application with Blazor for the frontend of our app, which we spent a lot of hours working on the first weeks. However we realized that creating and maintaining a SPA would be much more work, we estimated it would take at least twice the amount of code. Therefore we switched to server side rendering with Razor (commit \href{https://github.com/NiclasHjortkjaer/itu-minitwit/commit/6f1f4c0fde3a84cd562ba9b5271dc39a572e10c9}{6f1f4c0}) which had the upside that it is a much more similar approach to the legacy Flask application, which made it easier to implement the features. What we took away from this is that it is important not to over-engineer a system and choose unnecessary complexity just because it is more modern.
 
 \subsection{Operations}
 We discovered the importance of knowledge sharing. We quickly found that when we did not share what we had done to the project since last week, it took time for all members to have an overview of the entire system. To solve this issue, we started using retrospectives as a way of sharing knowledge every Tuesday before the next week's task.
 
-\subsection{Limited work time}
-One of the most significant issues the group faced was our limited work time. Since the project was rather extensive, and the amount of new tools that should be incorporated was large, it required much time from the group members. This was an issue since we primarily only had Tuesday as the day when we met physically. We all agreed that we work better when in the room together, and this was not easy to do every time. The result of this issue was that we sometimes had to work until the late evening hours on Tuesdays and work only on essential parts of the application. Still, it was a price that we were willing to pay not to have to work more online than we already did.
+% \subsection{Limited work time}
+% One of the most significant issues the group faced was our limited work time. Since the project was rather extensive, and the amount of new tools that should be incorporated was large, it required much time from the group members. This was an issue since we primarily only had Tuesday as the day when we met physically. We all agreed that we work better when in the room together, and this was not easy to do every time. The result of this issue was that we sometimes had to work until the late evening hours on Tuesdays. Still, it was a price that we were willing to pay not to have to work more online than we already did. The primary takeaway was  that we should only work on essential parts of the application when the task for the week was large.
+% \todo{we kunne godt overveje at cutte den her}
 
-\subsection{Major lessons learned}
-\begin{enumerate}
-    \item We learned a lot of new tools such as Grafana, Prometheus, Vagrant, and Digital Ocean, among others. We also reinforced our learning and learned more about tools like Bash, Docker, and Github.
-    \item We learned how to use the DevOps theory in practice on a project, which helps a lot with understanding the concepts more thoroughly.
-    \item We learned what it felt like to work with a DevOps approach, which many companies use in real life.
-    \item We learned and understood how one should think when working with DevOps since this is a very different way of thinking about the project and the code compared to not using a DevOps approach.
-    \item We learned about the value of automating work: E.g., turning the entire application on/off with a single script.
-    \item We learned about the practical sides of writing code meant to be published. 
-\end{enumerate}
+\subsection{Value of Logging}
+This project was the first time any of us had implemented a system with proper logging, which we found extremely valuable.
 
-\subsection{The differences with DevOps}
-Many previous projects we have worked with on ITU have not used a DevOps approach. This resulted in many of the things we did, the technologies we used, and how we had to think about the project changed substantially. All group members were writing their bachelor thesis while having this course, and none related to DevOps. This gives an obvious comparison between the applied work ethics in the two respective courses.  \\
+An example of when our logs were helpful was after we had the previously mentioned 12 hours of downtime due to our self-managed database crashing. We then had error logs for when the simulator attempted to post a message or follow with a user that had never been created due to the downtime. We then extracted all the usernames from the error logs and created a script to create the missing users in the system.
 
-Usually, we do not prioritize committing and pushing code as soon as it works in small steps. Instead, we usually only push when we have to merge our code with what the others have written. This is in sharp contrast to the DevOps approach we had in this course, where we would always commit, push (and, when the pipeline was set up correctly, release) when we had something that worked. The DevOps approach led to fewer merge conflicts than in our previous projects, resulting in our code being live faster. If one has code locally on their device without it being released, it is considered dead code since it is not used.
+Another instance when our logs were helpful was when the public timeline page of our application began to feel very slow. We could see in our logs that the query which found the newest messages took approximately 1,000 ms to return. The fix was easy, we created an index on the date which the query sorts by (commit \href{https://github.com/NiclasHjortkjaer/itu-minitwit/commit/d0996e8471bcbf364be5260702bc41719452bbca}{d0996e8}), suddenly the page loading felt much faster. We could assert this in the logs with the query now taking around 5 ms to return.
+
+\subsection{Difficulties of updating a live system}
+Initially, we had no docker swarm and no reverse proxy. At a moment, we wanted to implement HTTPS connection for our system. The MiniTwit application was listening to port 80 on our live DigitalOcean droplet which now had to be freed for the Nginx reverse proxy which applied the SSL certificate. What we decided to do was quickly take the system down and swap the ports. However, it took many attempts to get the HTTPS connection working, causing us to take the system down multiple times. Summed up, this probably caused around 3 hours of outage. This would not be acceptable for a real world system and it could have been a violation of our SLA.
+
+In retrospective what we could have done was redeployed the entire system on different infrastructure, debugged there, and then pointed our DigitalOcean reserved IP to the new system without causing outage. Overall the takeaway for our group is how difficult it is to update a live system. Luckily, the tests in our CI/CD pipeline assured that code that would break the system was never deployed during the course.
+
+
+% \subsection{The differences with DevOps}
+% We had no prior experience with a DevOps approach at ITU. This resulted in many of the things we did, the technologies we used, and how we had to think about the project changed substantially. 
+
+% Usually, we do not prioritize committing and pushing code as soon as it works in small steps. Instead, we usually only push when we have to merge our code with what the others have written. This is in sharp contrast to the DevOps approach we had in this course, where we would always commit, push (and, when the pipeline was set up correctly, release) when we had something that worked. The DevOps approach led to fewer merge conflicts than in our previous projects, resulting in our code being live faster. If one has code locally on a device without it being released, it is considered dead code since it is not used.
+% \todo{Sidste afsnit skal måske indeholde begreber som value stream, continuous delivery og continues integration}
