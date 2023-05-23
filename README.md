@@ -5,8 +5,6 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=NiclasHjortkjaer_itu-minitwit&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=NiclasHjortkjaer_itu-minitwit)
 # itu-minitwit
 
-### <a href="http://143.244.205.161">Live at 143.244.205.161</a>
-
 ## Run with docker-compose
 
 To run the program with Docker use the following command:
